@@ -1,0 +1,28 @@
+{
+	"checks": [
+		"Gamepad binding: move_forward",
+		"Gamepad binding: jump",
+		"Gamepad binding: interact",
+		"Gamepad binding: light_pulse",
+		"Gamepad binding: dodge",
+		"Gamepad binding: pause",
+		"Gamepad binding: journal",
+		"Gamepad binding: camera_left",
+		"Gamepad binding: camera_up",
+		"Left stick moves Neri",
+		"Right stick turns the camera",
+		"HUD switches to gamepad button hints",
+		"B button dodges",
+		"Y button emits the light pulse",
+		"Start pauses with a focused menu button",
+		"A activates the focused Continue button",
+		"X closes a dialogue without reopening it",
+		"A closes a dialogue without jumping",
+		"Keyboard input restores keyboard hints"
+	],
+	"engine": "4.7.2-stable (official)",
+	"failures": [],
+	"fps_at_end": 115.0,
+	"images": [],
+	"passed": true
+}

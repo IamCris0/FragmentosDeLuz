@@ -1,0 +1,41 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/player_controller.gd" id="1_y7kcb"]
+[ext_resource type="PackedScene" path="res://assets/characters/neri_quaternius.glb" id="2_plwmo"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_gmphs"]
+radius = 0.27
+height = 1.75
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_rmfp4"]
+radius = 0.18
+
+[node name="Player" type="CharacterBody3D" unique_id=1793143712]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 7)
+collision_layer = 2
+floor_snap_length = 0.35
+script = ExtResource("1_y7kcb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1945766035]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.875, 0)
+shape = SubResource("CapsuleShape3D_gmphs")
+
+[node name="Visual" type="Node3D" parent="." unique_id=1046664727 instance=ExtResource("2_plwmo")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+
+[node name="CameraPivot" type="Node3D" parent="." unique_id=1939359849]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 0)
+
+[node name="SpringArm3D" type="SpringArm3D" parent="CameraPivot" unique_id=244353747]
+transform = Transform3D(1, 0, 0, 0, 0.97437006, 0.22495104, 0, -0.22495104, 0.97437006, 0, 0, 0)
+shape = SubResource("SphereShape3D_rmfp4")
+spring_length = 4.4
+margin = 0.18
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot/SpringArm3D" unique_id=1491990574]
+current = true
+fov = 65.0
+near = 0.07
+far = 230.0
+
+[node name="AnimationTree" type="AnimationTree" parent="." unique_id=1454214767]

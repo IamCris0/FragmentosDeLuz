@@ -1,0 +1,40 @@
+{
+	"checks": [
+		"Five Memories of Auralia placed",
+		"Ground under memory lore_1",
+		"Memory reachable and promptable: lore_1",
+		"Memory is voiced: lore_1",
+		"Memory tells its story: lore_1",
+		"Image memory_01_dialogue",
+		"Ground under memory lore_2",
+		"Memory reachable and promptable: lore_2",
+		"Memory is voiced: lore_2",
+		"Memory tells its story: lore_2",
+		"Ground under memory lore_3",
+		"Memory reachable and promptable: lore_3",
+		"Memory is voiced: lore_3",
+		"Memory tells its story: lore_3",
+		"Ground under memory lore_4",
+		"Memory reachable and promptable: lore_4",
+		"Memory is voiced: lore_4",
+		"Memory tells its story: lore_4",
+		"Ground under memory lore_5",
+		"Memory reachable and promptable: lore_5",
+		"Memory is voiced: lore_5",
+		"Memory tells its story: lore_5",
+		"Each memory is recorded once",
+		"Repeating a memory does not inflate the count",
+		"Journal lists recovered memories",
+		"Image memory_02_orb",
+		"Story difficulty halves damage",
+		"Adventure difficulty keeps original damage"
+	],
+	"engine": "4.7.2-stable (official)",
+	"failures": [],
+	"fps_at_end": 1.0,
+	"images": [
+		"memory_01_dialogue.png",
+		"memory_02_orb.png"
+	],
+	"passed": true
+}

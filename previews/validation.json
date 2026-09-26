@@ -1,0 +1,21 @@
+{
+	"asset_height_m": 0.800000011920929,
+	"checks": [
+		"GLB import",
+		"Y-up / 0.8 m",
+		"centered origin",
+		"primitive collision raycast",
+		"idle animation",
+		"seven E key pickups",
+		"HUD signals",
+		"duplicate protection",
+		"completion state",
+		"reset",
+		"reset during flight",
+		"orbit input",
+		"narrow HUD"
+	],
+	"engine": "4.7.2-stable (official)",
+	"renderer": "forward_plus",
+	"status": "PASS"
+}

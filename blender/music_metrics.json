@@ -1,0 +1,72 @@
+{
+  "title": {
+    "seconds": 75.79,
+    "loop": true,
+    "loop_seconds": 75.789
+  },
+  "exploration": {
+    "seconds": 83.48,
+    "loop": true,
+    "loop_seconds": 83.478
+  },
+  "garden": {
+    "seconds": 80.0,
+    "loop": true,
+    "loop_seconds": 80.0
+  },
+  "sanctuary": {
+    "seconds": 80.0,
+    "loop": true,
+    "loop_seconds": 80.0
+  },
+  "combat": {
+    "seconds": 60.95,
+    "loop": true,
+    "loop_seconds": 60.952
+  },
+  "finale": {
+    "seconds": 129.04,
+    "loop": false,
+    "loop_seconds": 122.041
+  },
+  "map": {
+    "seconds": 45.71,
+    "loop": true,
+    "loop_seconds": 45.714
+  },
+  "grutas": {
+    "seconds": 48.0,
+    "loop": true,
+    "loop_seconds": 48.0
+  },
+  "grutas_deep": {
+    "seconds": 48.0,
+    "loop": true,
+    "loop_seconds": 48.0
+  },
+  "cefiro": {
+    "seconds": 73.85,
+    "loop": true,
+    "loop_seconds": 73.846
+  },
+  "cefiro_summit": {
+    "seconds": 41.74,
+    "loop": true,
+    "loop_seconds": 41.739
+  },
+  "observatorio": {
+    "seconds": 58.18,
+    "loop": true,
+    "loop_seconds": 58.182
+  },
+  "boss": {
+    "seconds": 55.65,
+    "loop": true,
+    "loop_seconds": 55.652
+  },
+  "finale2": {
+    "seconds": 131.0,
+    "loop": false,
+    "loop_seconds": 123.998
+  }
+}

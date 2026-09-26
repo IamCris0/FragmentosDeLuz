@@ -1,0 +1,50 @@
+{
+  "rune_0": {
+    "seconds": 1.8,
+    "lufs": -22
+  },
+  "rune_1": {
+    "seconds": 1.8,
+    "lufs": -22
+  },
+  "rune_2": {
+    "seconds": 1.8,
+    "lufs": -22
+  },
+  "solved": {
+    "seconds": 4.2,
+    "lufs": -20
+  },
+  "fragment_rise": {
+    "seconds": 1.5,
+    "lufs": -25
+  },
+  "beacon_ignite": {
+    "seconds": 6.0,
+    "lufs": -17
+  },
+  "island_chime": {
+    "seconds": 2.8,
+    "lufs": -27
+  },
+  "gate_dissolve": {
+    "seconds": 2.8,
+    "lufs": -22
+  },
+  "ui_move": {
+    "seconds": 0.45,
+    "lufs": -30
+  },
+  "ui_select": {
+    "seconds": 0.9,
+    "lufs": -25
+  },
+  "ui_back": {
+    "seconds": 0.6,
+    "lufs": -28
+  },
+  "cine_whoosh": {
+    "seconds": 1.4,
+    "lufs": -26
+  }
+}

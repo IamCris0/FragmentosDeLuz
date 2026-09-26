@@ -1,0 +1,28 @@
+{
+	"checks": [
+		"Director enabled for the cinematic test",
+		"Image cefiro_cine_01",
+		"Cinematic cefiro_intro returns control",
+		"Cinematic cefiro_intro is remembered",
+		"Image cefiro_cine_02",
+		"Cinematic cefiro_winds returns control",
+		"Cinematic cefiro_winds is remembered",
+		"Image cefiro_cine_03",
+		"Cinematic cefiro_key returns control",
+		"Cinematic cefiro_key is remembered",
+		"Save snapshot keeps the current island",
+		"Save snapshot keeps the island checkpoint",
+		"Save snapshot keeps destellos"
+	],
+	"engine": "4.7.2-stable (official)",
+	"failures": [],
+	"fps": 3.0,
+	"images": [
+		"cefiro_cine_01.png",
+		"cefiro_cine_02.png",
+		"cefiro_cine_03.png"
+	],
+	"level": "cefiro",
+	"part": "cinematics",
+	"passed": true
+}

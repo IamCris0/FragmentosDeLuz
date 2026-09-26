@@ -1,0 +1,17 @@
+{
+	"checks": [
+		"Four islands on the live map",
+		"Cloud sea under the archipelago",
+		"Map highlights the next island to explore",
+		"Travel button focused",
+		"Locked island cannot be travelled to",
+		"Locked island is veiled",
+		"Left input changes the selected island",
+		"Constellation opens from the map",
+		"Map panel fits 800x640",
+		"Map panel fits 1024x768",
+		"Travel sets the destination island"
+	],
+	"failures": [],
+	"passed": true
+}

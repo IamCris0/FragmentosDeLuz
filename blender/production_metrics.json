@@ -1,0 +1,29 @@
+{
+  "rig_bones": 28,
+  "character_meshes": 1,
+  "character_triangles": 8824,
+  "animations": [
+    "idle",
+    "walk",
+    "run",
+    "jump",
+    "interact",
+    "fall",
+    "land",
+    "wave",
+    "pulse",
+    "hurt"
+  ],
+  "assets": {
+    "column": 1,
+    "entrance_arch": 1,
+    "island_rock": 1,
+    "tree": 1,
+    "fern": 1,
+    "portal_ring": 1,
+    "chest": 11,
+    "lever": 5,
+    "platform": 1,
+    "echo_sentinel": 1
+  }
+}

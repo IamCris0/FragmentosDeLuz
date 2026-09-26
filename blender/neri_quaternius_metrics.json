@@ -1,0 +1,24 @@
+{
+  "character": "Neri - Quaternius adaptation",
+  "triangles": 23397,
+  "meshes": 1,
+  "bones": 65,
+  "animations": {
+    "idle": "Idle_Loop",
+    "walk": "Walk_Loop",
+    "run": "Sprint_Loop",
+    "jump": "Jump_Start",
+    "fall": "Jump_Loop",
+    "land": "Jump_Land",
+    "interact": "Interact",
+    "wave": "Idle_Talking_Loop",
+    "pulse": "Spell_Simple_Shoot",
+    "hurt": "Hit_Chest",
+    "dodge": "Roll"
+  },
+  "license": "CC0-1.0",
+  "sources": [
+    "https://quaternius.com/packs/universalbasecharacters.html",
+    "https://quaternius.com/packs/universalanimationlibrary.html"
+  ]
+}

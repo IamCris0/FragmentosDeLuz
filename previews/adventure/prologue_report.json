@@ -1,0 +1,12 @@
+{
+	"failures": [],
+	"music_loops": true,
+	"music_playing": true,
+	"narration_files": 4,
+	"panels": 4,
+	"passed": true,
+	"viewports": [
+		"1440x900",
+		"800x640"
+	]
+}

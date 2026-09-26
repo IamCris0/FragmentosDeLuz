@@ -1,0 +1,21 @@
+{
+	"checks": [
+		"Title menu is the game entry",
+		"Live 3D island backdrop",
+		"Backdrop strips gameplay nodes",
+		"Intro fade reveals logo",
+		"Menu actions present",
+		"Keyboard or gamepad focus on first action",
+		"Backdrop camera drifts",
+		"Title music plays",
+		"Settings include voice volume",
+		"Closing settings restores focus",
+		"Menu fits 800x640",
+		"Menu fits 1024x768",
+		"Credits scroll",
+		"Credits close back to menu"
+	],
+	"engine": "4.7.2-stable (official)",
+	"failures": [],
+	"passed": true
+}

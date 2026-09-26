@@ -1,0 +1,33 @@
+{
+  "asset": "luma_spirit",
+  "triangles": 11292,
+  "objects": [
+    "LumaSpirit",
+    "Luma_Arm_L",
+    "Luma_Arm_R",
+    "Luma_Body",
+    "Luma_Collar",
+    "Luma_CollarGem",
+    "Luma_Crown",
+    "Luma_CrownGem",
+    "Luma_EyePivot_L",
+    "Luma_EyePivot_R",
+    "Luma_Eye_L",
+    "Luma_Eye_R",
+    "Luma_FaceRim",
+    "Luma_Fin_L",
+    "Luma_Fin_R",
+    "Luma_Float",
+    "Luma_Head",
+    "Luma_HeadPivot",
+    "Luma_Leaf",
+    "Luma_LeafPivot",
+    "Luma_TrimHem",
+    "Luma_TrimLower",
+    "Luma_TrimUpper",
+    "Luma_Visor"
+  ],
+  "height_m": 1.9,
+  "front": "-Y Blender / +Z Godot",
+  "blender": "5.0.1"
+}

@@ -1,0 +1,15 @@
+{
+	"checks": [
+		"A 2x2 sheet becomes four comic panels",
+		"The interlude plays before Luma's map guide",
+		"Continue shows the next panel",
+		"The interlude ends and is remembered",
+		"Luma's map guide follows the interlude",
+		"Postcard shows for an unlocked island",
+		"Info panel with postcard fits the screen",
+		"Locked islands keep their postcard hidden",
+		"Skill icon comes from the 4x4 sheet"
+	],
+	"failures": [],
+	"passed": true
+}

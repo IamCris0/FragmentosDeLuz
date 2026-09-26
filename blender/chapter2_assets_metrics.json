@@ -1,0 +1,147 @@
+{
+  "crystal_spire": {
+    "file": "godot/assets/environment/crystal_spire.glb",
+    "nodes": [
+      "CrystalSpire"
+    ],
+    "triangles": 256
+  },
+  "crystal_shard": {
+    "file": "godot/assets/environment/crystal_shard.glb",
+    "nodes": [
+      "CrystalShard"
+    ],
+    "triangles": 212
+  },
+  "cave_rock": {
+    "file": "godot/assets/environment/cave_rock.glb",
+    "nodes": [
+      "CaveRock"
+    ],
+    "triangles": 546
+  },
+  "rock_arch": {
+    "file": "godot/assets/environment/rock_arch.glb",
+    "nodes": [
+      "RockArch"
+    ],
+    "triangles": 1310
+  },
+  "cloud_stone": {
+    "file": "godot/assets/environment/cloud_stone.glb",
+    "nodes": [
+      "CloudStone"
+    ],
+    "triangles": 200
+  },
+  "prism": {
+    "file": "godot/assets/props/prism.glb",
+    "nodes": [
+      "PrismBase",
+      "PrismHead"
+    ],
+    "triangles": 717
+  },
+  "beam_emitter": {
+    "file": "godot/assets/props/beam_emitter.glb",
+    "nodes": [
+      "BeamEmitter"
+    ],
+    "triangles": 896
+  },
+  "beam_receptor": {
+    "file": "godot/assets/props/beam_receptor.glb",
+    "nodes": [
+      "ReceptorBody",
+      "ReceptorGem"
+    ],
+    "triangles": 540
+  },
+  "windmill": {
+    "file": "godot/assets/environment/windmill.glb",
+    "nodes": [
+      "Tower",
+      "Blades"
+    ],
+    "triangles": 530
+  },
+  "valve": {
+    "file": "godot/assets/props/valve.glb",
+    "nodes": [
+      "ValveBody",
+      "ValveWheel"
+    ],
+    "triangles": 664
+  },
+  "observatory_dome": {
+    "file": "godot/assets/environment/observatory_dome.glb",
+    "nodes": [
+      "ObservatoryDome"
+    ],
+    "triangles": 1808
+  },
+  "telescope": {
+    "file": "godot/assets/props/telescope.glb",
+    "nodes": [
+      "TelescopeMount",
+      "TelescopeTube"
+    ],
+    "triangles": 1604
+  },
+  "star_pillar": {
+    "file": "godot/assets/props/star_pillar.glb",
+    "nodes": [
+      "PillarBody",
+      "PillarGem"
+    ],
+    "triangles": 980
+  },
+  "star_key": {
+    "file": "godot/assets/props/star_key.glb",
+    "nodes": [
+      "StarKey"
+    ],
+    "triangles": 632
+  },
+  "vigia": {
+    "file": "godot/assets/enemies/vigia.glb",
+    "nodes": [
+      "VigiaBody",
+      "VigiaEye",
+      "VigiaRingA",
+      "VigiaRingB"
+    ],
+    "triangles": 918
+  },
+  "cefiro": {
+    "file": "godot/assets/enemies/cefiro.glb",
+    "nodes": [
+      "CefiroBody",
+      "CefiroWingL",
+      "CefiroWingR"
+    ],
+    "triangles": 254
+  },
+  "heraldo": {
+    "file": "godot/assets/enemies/heraldo.glb",
+    "nodes": [
+      "HeraldoCore",
+      "HeraldoMask",
+      "HeraldoCorona",
+      "HeraldoShard_0",
+      "HeraldoShard_1",
+      "HeraldoShard_2",
+      "HeraldoShard_3",
+      "HeraldoShard_4",
+      "HeraldoShard_5"
+    ],
+    "triangles": 1816
+  },
+  "maren_echo": {
+    "file": "godot/assets/characters/maren_echo.glb",
+    "nodes": [
+      "MarenEcho"
+    ],
+    "triangles": 620
+  }
+}

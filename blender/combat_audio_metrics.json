@@ -1,0 +1,22 @@
+{
+  "dodge": {
+    "seconds": 0.5,
+    "peak": 0.7
+  },
+  "guardian_charge": {
+    "seconds": 1.35,
+    "peak": 0.3696029225555143
+  },
+  "guardian_wave": {
+    "seconds": 1.1,
+    "peak": 0.569654001019368
+  },
+  "beacon_chime": {
+    "seconds": 4.0,
+    "peak": 0.3401842097095177
+  },
+  "combat_tension": {
+    "seconds": 16.0,
+    "peak": 0.32926172208216326
+  }
+}

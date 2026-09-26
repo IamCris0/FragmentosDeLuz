@@ -1,0 +1,82 @@
+{
+  "music_exploration": {
+    "seconds": 64.0,
+    "peak_db": -17.24,
+    "loop_boundary_delta": 0.0002066172455714695
+  },
+  "music_garden": {
+    "seconds": 64.0,
+    "peak_db": -19.03,
+    "loop_boundary_delta": 0.00014864911896681973
+  },
+  "music_sanctuary": {
+    "seconds": 64.0,
+    "peak_db": -16.69,
+    "loop_boundary_delta": 0.00018607771650285551
+  },
+  "wind_soft": {
+    "seconds": 16.0,
+    "peak_db": -11.07,
+    "loop_boundary_delta": 0.0021480105898600494
+  },
+  "waterfall": {
+    "seconds": 16.0,
+    "peak_db": -8.18,
+    "loop_boundary_delta": 0.06578112062880684
+  },
+  "crystal_hum": {
+    "seconds": 12.0,
+    "peak_db": -22.06,
+    "loop_boundary_delta": 0.00018201312561121064
+  },
+  "step_0": {
+    "seconds": 0.22,
+    "peak_db": -9.63,
+    "loop_boundary_delta": null
+  },
+  "step_1": {
+    "seconds": 0.22,
+    "peak_db": -6.87,
+    "loop_boundary_delta": null
+  },
+  "step_2": {
+    "seconds": 0.22,
+    "peak_db": -6.84,
+    "loop_boundary_delta": null
+  },
+  "step_3": {
+    "seconds": 0.22,
+    "peak_db": -9.2,
+    "loop_boundary_delta": null
+  },
+  "land": {
+    "seconds": 0.45,
+    "peak_db": -4.95,
+    "loop_boundary_delta": null
+  },
+  "lever": {
+    "seconds": 0.45,
+    "peak_db": -11.94,
+    "loop_boundary_delta": null
+  },
+  "pulse": {
+    "seconds": 0.62,
+    "peak_db": -12.16,
+    "loop_boundary_delta": null
+  },
+  "hit": {
+    "seconds": 0.35,
+    "peak_db": -10.17,
+    "loop_boundary_delta": null
+  },
+  "enemy_hit": {
+    "seconds": 0.48,
+    "peak_db": -12.41,
+    "loop_boundary_delta": null
+  },
+  "enemy_alert": {
+    "seconds": 0.85,
+    "peak_db": -23.11,
+    "loop_boundary_delta": null
+  }
+}

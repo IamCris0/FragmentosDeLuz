@@ -1,0 +1,35 @@
+{
+	"checks": [
+		"Enemy telegraphs before damage",
+		"Windup gives player time to react",
+		"Image combat_01_warning",
+		"Leaving attack radius avoids damage",
+		"Q cancels a pending attack",
+		"Pulse spends energy",
+		"Pulse creates visible world effect",
+		"Image combat_02_pulse",
+		"Stunned enemy does not patrol",
+		"Completed attack damages and delays regeneration",
+		"Shared immunity prevents stacked damage",
+		"Dialogue prevents enemy attacks",
+		"Reveal then continue closes dialogue",
+		"Depletion returns player to checkpoint",
+		"Respawn restores energy and protection",
+		"Enemy cannot attack a different floor",
+		"Purification records unique enemy ID",
+		"Enemy reward cannot duplicate",
+		"Persisted purified enemy stays absent on reload",
+		"Threat and toast do not overlap",
+		"Tutorial and interaction fit narrow viewport",
+		"Image combat_03_hud_800"
+	],
+	"engine": "4.7.2-stable (official)",
+	"failures": [],
+	"fps_at_end": 1.0,
+	"images": [
+		"combat_01_warning.png",
+		"combat_02_pulse.png",
+		"combat_03_hud_800.png"
+	],
+	"passed": true
+}

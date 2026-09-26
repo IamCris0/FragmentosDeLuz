@@ -1,0 +1,28 @@
+{
+	"checks": [
+		"Director enabled for the cinematic test",
+		"Image grutas_cine_01",
+		"Cinematic grutas_intro returns control",
+		"Cinematic grutas_intro is remembered",
+		"Image grutas_cine_02",
+		"Cinematic grutas_heart returns control",
+		"Cinematic grutas_heart is remembered",
+		"Image grutas_cine_03",
+		"Cinematic grutas_key returns control",
+		"Cinematic grutas_key is remembered",
+		"Save snapshot keeps the current island",
+		"Save snapshot keeps the island checkpoint",
+		"Save snapshot keeps destellos"
+	],
+	"engine": "4.7.2-stable (official)",
+	"failures": [],
+	"fps": 1.0,
+	"images": [
+		"grutas_cine_01.png",
+		"grutas_cine_02.png",
+		"grutas_cine_03.png"
+	],
+	"level": "grutas",
+	"part": "cinematics",
+	"passed": true
+}

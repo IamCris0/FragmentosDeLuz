@@ -1,0 +1,32 @@
+{
+  "blender": "5.2.1 LTS",
+  "height_m": 0.8,
+  "diameter_m": 0.2,
+  "origin": "center",
+  "glTF_up": "+Y",
+  "triangles": 132,
+  "objects": [
+    {
+      "object": "Crystal_Shell",
+      "triangles": 96,
+      "vertices": 50,
+      "uv": true,
+      "boundary_edges": 0
+    },
+    {
+      "object": "Crystal_Core",
+      "triangles": 24,
+      "vertices": 14,
+      "uv": true,
+      "boundary_edges": 0
+    },
+    {
+      "object": "Crystal_Edges",
+      "triangles": 12,
+      "vertices": 24,
+      "uv": true,
+      "boundary_edges": 24
+    }
+  ],
+  "note": "Shell and core closed; six decorative edge ribbons intentionally open."
+}
