@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://m23cnlq6wqg7"
-path="res://.godot/imported/neri_quaternius.glb-6ab2b52dca5efaf0b768e365b2923b6a.scn"
+uid="uid://hfvwlm51in0c"
+path="res://.godot/imported/neri_quaternius_adult_ORIGINAL.glb-cceaf9ac78577fa914bf6b59cf1395e1.scn"
 
 [deps]
 
-source_file="res://assets/characters/neri_quaternius.glb"
-dest_files=["res://.godot/imported/neri_quaternius.glb-6ab2b52dca5efaf0b768e365b2923b6a.scn"]
+source_file="res://assets/characters/backup_old_adult_model/neri_quaternius_adult_ORIGINAL.glb"
+dest_files=["res://.godot/imported/neri_quaternius_adult_ORIGINAL.glb-cceaf9ac78577fa914bf6b59cf1395e1.scn"]
 
 [params]
 
