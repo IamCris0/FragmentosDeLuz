@@ -109,8 +109,11 @@ func _start_story() -> void:
 		await comic.finished
 		comic_open = false
 		GameEvents.story_seen["chapter2_comic"] = true
+		GameEvents.save_game()
 	if not GameEvents.story_seen.has("map_intro"):
 		_show_intro()
+	else:
+		_select(selected, true)
 
 
 func _initial_selection() -> int:
@@ -511,6 +514,7 @@ func _button(parent: Node, id: String, caption: String, action: Callable) -> But
 
 func _layout() -> void:
 	var size := get_viewport().get_visible_rect().size
+	postcard.visible = postcard.texture != null and size.y >= 700
 	var narrow := size.x < 1050
 	root.get_node("Heading").position = Vector2(40, 26)
 	root.get_node("Heading").add_theme_font_size_override("font_size", 26 if narrow else 34)
@@ -617,9 +621,11 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _travel() -> void:
 	var id := order[selected]
-	if leaving or not GameEvents.is_level_unlocked(id): return
+	if leaving or comic_open or dialog_open or constellation.visible or not GameEvents.is_level_unlocked(id): return
 	var scene := GameEvents.travel_to(id)
-	if scene == "": return
+	if scene == "":
+		info_status.text = GameEvents.save_status
+		return
 	leaving = true
 	_play_ui("travel")
 	if "--qa-map" in OS.get_cmdline_user_args(): return
@@ -630,13 +636,15 @@ func _travel() -> void:
 
 
 func _open_constellation() -> void:
-	if dialog_open: return
+	if leaving or comic_open or dialog_open: return
 	constellation.open()
 
 
 func _to_menu() -> void:
-	if leaving: return
-	GameEvents.save_game()
+	if leaving or comic_open or dialog_open or constellation.visible: return
+	if not GameEvents.save_game():
+		info_status.text = GameEvents.save_status
+		return
 	leaving = true
 	var tween := create_tween()
 	tween.tween_property(fade, "color:a", 1.0, 0.7)
@@ -713,7 +721,7 @@ func _play_ui(cue: String) -> void:
 # --- Validación --------------------------------------------------------------------------------------
 
 func _qa() -> void:
-	var folder := ProjectSettings.globalize_path("res://../previews/levels/")
+	var folder := preload("res://tools/qa_support.gd").output_folder("levels")
 	DirAccess.make_dir_recursive_absolute(folder)
 	var checks: Array[String] = []
 	var failures: Array[String] = []
@@ -764,12 +772,12 @@ func _qa() -> void:
 	file.store_string(JSON.stringify(report, "\t"))
 	file.close()
 	print("MAP_QA ", JSON.stringify(report))
-	get_tree().quit(0 if failures.is_empty() else 1)
+	await preload("res://tools/qa_support.gd").finish(get_tree(), 0 if failures.is_empty() else 1)
 
 
 ## --qa-art: el interludio en viñetas, la guía de Luma, las postales y los iconos con imágenes de ensayo.
 func _qa_art() -> void:
-	var folder := ProjectSettings.globalize_path("res://../previews/levels/")
+	var folder := preload("res://tools/qa_support.gd").output_folder("levels")
 	DirAccess.make_dir_recursive_absolute(folder)
 	var checks: Array[String] = []
 	var failures: Array[String] = []
@@ -822,7 +830,7 @@ func _qa_art() -> void:
 	file.store_string(JSON.stringify(report, "\t"))
 	file.close()
 	print("ART_QA ", JSON.stringify(report))
-	get_tree().quit(0 if failures.is_empty() else 1)
+	await preload("res://tools/qa_support.gd").finish(get_tree(), 0 if failures.is_empty() else 1)
 
 
 func _capture(path: String) -> void:

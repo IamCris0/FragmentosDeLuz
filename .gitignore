@@ -3,3 +3,11 @@ godot/.godot/
 
 # Paquetes ya entregados de la Fase 7 (contenido ya integrado en el proyecto)
 _entrega_fase7/
+
+# Local validation output, exports and tool caches.
+artifacts/
+exports/
+*.log
+__pycache__/
+*.pyc
+*.blend1

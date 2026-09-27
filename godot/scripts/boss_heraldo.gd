@@ -226,6 +226,10 @@ func _physics_process(delta: float) -> void:
 	time += delta
 	if not is_instance_valid(player):
 		player = get_tree().get_first_node_in_group("player") as CharacterBody3D
+	# Pause the whole encounter, including movement, while control belongs to a modal.
+	if is_instance_valid(player) and player.locked:
+		_animate(delta)
+		return
 	match state:
 		"fighting": _fight(delta)
 		"exposed":

@@ -103,6 +103,6 @@ func run() -> void:
 		if FileAccess.file_exists(temporary): DirAccess.remove_absolute(temporary)
 	DirAccess.remove_absolute(folder)
 	var report := {"passed": failures.is_empty(), "checks": checks, "failures": failures, "isolated_from_player_save": true}
-	put(ProjectSettings.globalize_path("res://../previews/adventure/save_report.json"), JSON.stringify(report, "\t"))
+	put(preload("res://tools/qa_support.gd").output_folder("adventure") + "save_report.json", JSON.stringify(report, "\t"))
 	print("SAVE_QA ", JSON.stringify(report))
 	quit(0 if failures.is_empty() else 1)

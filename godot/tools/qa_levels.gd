@@ -179,7 +179,7 @@ func grounded_at(point: Vector3) -> void:
 func run(scene: Node3D) -> void:
 	game = scene
 	player = scene.player
-	folder = ProjectSettings.globalize_path("res://../previews/levels/")
+	folder = preload("res://tools/qa_support.gd").output_folder("levels")
 	DirAccess.make_dir_recursive_absolute(folder)
 	for arg in OS.get_cmdline_user_args():
 		if arg.begins_with("--qa-part="): part = arg.substr(10)
@@ -196,7 +196,7 @@ func run(scene: Node3D) -> void:
 		await cinematics_checks()
 		common_save_checks()
 		finished = true
-		write_report()
+		await write_report()
 		return
 	match str(scene.level_id):
 		"grutas": await grutas_checks()
@@ -206,7 +206,7 @@ func run(scene: Node3D) -> void:
 			if has_method("observatorio_checks"): await call("observatorio_checks")
 	common_save_checks()
 	finished = true
-	write_report()
+	await write_report()
 
 
 ## --qa --qa-cinematics --qa-part=cinematics: reproduce cada cinemática de la isla con el director real
@@ -289,7 +289,7 @@ func write_report() -> void:
 	file.store_string(JSON.stringify(report, "\t"))
 	file.close()
 	print("LEVEL_QA ", JSON.stringify(report))
-	get_tree().quit(0 if report.passed else 1)
+	await preload("res://tools/qa_support.gd").finish(get_tree(), 0 if report.passed else 1)
 
 
 # --- Grutas Prismáticas ----------------------------------------------------------------------------
@@ -614,6 +614,8 @@ func cefiro_checks() -> void:
 		cefiro.windup_time = 0.0
 		cefiro.attack_time = 0.0
 		cefiro.stun_time = 0.0
+		cefiro.dash_time = 0.0
+		cefiro.dash_hit = false
 		cefiro.telegraph.hide()
 		waited = 0.0
 		while cefiro.mode != cefiro.Mode.WINDUP and waited < 6.0:

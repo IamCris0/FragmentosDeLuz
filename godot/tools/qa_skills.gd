@@ -144,10 +144,11 @@ func _on_pulse(_origin: Vector3, radius: float, _force: float) -> void:
 
 func run(scene: Node3D) -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	get_window().size = Vector2i(1440, 900)
 	game = scene
 	player = scene.player
 	hud = scene.hud
-	folder = ProjectSettings.globalize_path("res://../previews/levels/")
+	folder = preload("res://tools/qa_support.gd").output_folder("levels")
 	DirAccess.make_dir_recursive_absolute(folder)
 	for i in 7: GameEvents.fragment_ids["fragment_%d" % i] = true
 	GameEvents.collected = 7
@@ -273,4 +274,4 @@ func write_report() -> void:
 	file.store_string(JSON.stringify(report, "\t"))
 	file.close()
 	print("SKILLS_QA ", JSON.stringify(report))
-	get_tree().quit(0 if report.passed else 1)
+	await preload("res://tools/qa_support.gd").finish(get_tree(), 0 if report.passed else 1)

@@ -52,6 +52,7 @@ var energy: float = 100.0
 var objective: String = "Encuentra a Luma junto al arco antiguo"
 var story_seen: Dictionary = {}
 var loaded: bool = false
+var replay_prologue: bool = false
 var tutorial_stage: int = 0
 var tutorial_text: String = INITIAL_TUTORIAL
 var active_threats: int = 0
@@ -214,7 +215,7 @@ func set_cinematic(active: bool) -> void:
 
 ## Informa al menú principal si existe una partida que se pueda continuar.
 func has_saved_progress() -> bool:
-	if "--qa" in OS.get_cmdline_user_args() and not "--qa-menu-save" in OS.get_cmdline_user_args():
+	if is_qa_run():
 		return false
 	var result: Dictionary = SaveStore.load_best(SAVE_PATH)
 	var data: Dictionary = result.data
@@ -406,6 +407,8 @@ func complete_level(id: String = "") -> void:
 ## Viaje desde la Carta del Archipiélago. Devuelve la escena a cargar ("" si está bloqueado).
 func travel_to(id: String) -> String:
 	if not LevelData.exists(id) or not is_level_unlocked(id): return ""
+	var previous := {"level": level, "levels": levels.duplicate(true), "checkpoint": checkpoint,
+		"zone": zone, "hint": hint, "auralia_checkpoint": auralia_checkpoint, "auralia_zone": auralia_zone}
 	if level == "auralia" and id != "auralia":
 		auralia_checkpoint = checkpoint
 		auralia_zone = zone
@@ -419,11 +422,14 @@ func travel_to(id: String) -> String:
 		level_state(id).checkpoint = 0
 	level = id
 	if id != "auralia": enter_level(id)
-	save_game()
+	if not save_game():
+		for key in previous: set(key, previous[key])
+		return ""
 	return LevelData.scene_for(id)
 
 
 func reset() -> void:
+	replay_prologue = false
 	collected = 0
 	fragment_ids.clear()
 	puzzle_solved = false
@@ -479,7 +485,7 @@ func snapshot() -> Dictionary:
 ## aunque se invoque sin el modificador --qa base (ver DESARROLLO.md).
 func is_qa_run() -> bool:
 	for arg in OS.get_cmdline_user_args():
-		if arg.begins_with("--qa"): return true
+		if arg == "--qa" or arg.begins_with("--qa-"): return true
 	return false
 
 

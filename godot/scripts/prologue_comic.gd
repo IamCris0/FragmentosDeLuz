@@ -1,6 +1,8 @@
 extends CanvasLayer
 
 const MAIN_SCENE := "res://scenes/main_island.tscn"
+const TITLE_SCENE := "res://scenes/title_menu.tscn"
+const LevelData = preload("res://scripts/level_data.gd")
 const UI = preload("res://scripts/ui_theme.gd")
 const Audio = preload("res://scripts/audio_manager.gd")
 const CAPTIONS: Array[Dictionary] = [
@@ -54,7 +56,8 @@ func _exit_tree() -> void:
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	GameEvents.load_game()
-	if not "--qa-prologue" in OS.get_cmdline_user_args() and not "--replay-prologue" in OS.get_cmdline_user_args() and ("--qa" in OS.get_cmdline_user_args() or "--skip-prologue" in OS.get_cmdline_user_args() or GameEvents.story_seen.has("prologue")):
+	if "--replay-prologue" in OS.get_cmdline_user_args(): GameEvents.replay_prologue = true
+	if not GameEvents.replay_prologue and not "--qa-prologue" in OS.get_cmdline_user_args() and ("--qa" in OS.get_cmdline_user_args() or "--skip-prologue" in OS.get_cmdline_user_args() or GameEvents.story_seen.has("prologue")):
 		call_deferred("_start_game")
 		return
 	_build_ui()
@@ -244,21 +247,31 @@ func _narrate(panel_index: int) -> void:
 
 
 func _finish() -> void:
-	GameEvents.story_seen["prologue"] = true
-	GameEvents.save_game()
+	if not GameEvents.replay_prologue:
+		GameEvents.story_seen["prologue"] = true
+		GameEvents.save_game()
 	_start_game()
+
+
+func destination_scene() -> String:
+	if GameEvents.replay_prologue: return TITLE_SCENE
+	var scene := LevelData.scene_for(GameEvents.level)
+	return scene if ResourceLoader.exists(scene) else MAIN_SCENE
 
 
 func _start_game() -> void:
 	if changing_scene: return
 	changing_scene = true
 	get_tree().paused = false
-	get_tree().change_scene_to_file(MAIN_SCENE)
+	var scene := destination_scene()
+	GameEvents.replay_prologue = false
+	get_tree().change_scene_to_file(scene)
 
 
 func _qa() -> void:
-	var folder := ProjectSettings.globalize_path("res://../previews/adventure/")
+	var folder := preload("res://tools/qa_support.gd").output_folder("adventure")
 	var failures: Array[String] = []
+	var checks: Array[String] = []
 	for viewport_size in [Vector2i(1440,900), Vector2i(800,640)]:
 		get_window().size = viewport_size
 		for i in 4:
@@ -268,6 +281,8 @@ func _qa() -> void:
 			await get_tree().process_frame
 			if advance.get_global_rect().end.y > viewport_size.y or body_label.get_line_count() * body_label.get_line_height() > body_label.size.y:
 				failures.append("Caption overflow %d %s" % [i, viewport_size])
+			else:
+				checks.append("Caption fits panel %d at %s" % [i, viewport_size])
 			if DisplayServer.get_name() != "headless":
 				await RenderingServer.frame_post_draw
 				get_viewport().get_texture().get_image().save_png(folder + "prologue_%d_%d.png" % [i+1,viewport_size.x])
@@ -275,20 +290,24 @@ func _qa() -> void:
 	var loops_configured: bool = (soundtrack is AudioStreamWAV and soundtrack.loop_mode == AudioStreamWAV.LOOP_FORWARD) or (soundtrack is AudioStreamOggVorbis and soundtrack.loop)
 	if not loops_configured:
 		failures.append("Prologue music is not configured to loop")
+	else: checks.append("Prologue music is configured to loop")
 	$PrologueMusic.seek(soundtrack.get_length() - 0.08)
-	await get_tree().create_timer(0.24).timeout
+	# Audio advances in real time even when QA accelerates the simulation clock.
+	var audio_deadline := Time.get_ticks_msec() + 350
+	while Time.get_ticks_msec() < audio_deadline:
+		await get_tree().process_frame
 	var music_loops: bool = $PrologueMusic.playing and $PrologueMusic.get_playback_position() < 0.6
 	if not music_loops: failures.append("Prologue music does not cross its loop boundary")
+	else: checks.append("Prologue audio crosses its loop boundary in real time")
 	var narration_files: int = 0
 	for i in 4:
 		if ResourceLoader.exists("res://assets/audio/voice/vo_prologue_%d.ogg" % i): narration_files += 1
 	if narration_files != 4: failures.append("Prologue narration is incomplete")
-	var report := {"passed":failures.is_empty(), "failures":failures, "panels":4, "viewports":["1440x900","800x640"], "music_playing":$PrologueMusic.playing, "music_loops":music_loops, "narration_files":narration_files}
+	else: checks.append("All four narration clips exist")
+	var report := {"passed":failures.is_empty(), "failures":failures, "checks":checks, "panels":4, "viewports":["1440x900","800x640"], "music_playing":$PrologueMusic.playing, "music_loops":music_loops, "narration_files":narration_files}
 	var file := FileAccess.open(folder + "prologue_report.json", FileAccess.WRITE)
 	file.store_string(JSON.stringify(report, "\t"))
 	file.close()
 	print("PROLOGUE_QA ", JSON.stringify(report))
-	$PrologueMusic.stop()
-	$PrologueMusic.stream = null
-	await get_tree().create_timer(0.1).timeout
-	get_tree().quit(0 if failures.is_empty() else 1)
+	soundtrack = null
+	await preload("res://tools/qa_support.gd").finish(get_tree(), 0 if failures.is_empty() else 1)

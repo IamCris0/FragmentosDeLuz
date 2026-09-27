@@ -150,8 +150,8 @@ func obtain_key() -> void:
 
 func open_map() -> void:
 	if leaving: return
+	if not GameEvents.save_game(): return
 	leaving = true
-	GameEvents.save_game()
 	player.locked = true
 	GameEvents.sound_requested.emit("travel")
 	if qa_mode: return

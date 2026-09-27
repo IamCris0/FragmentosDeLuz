@@ -60,32 +60,32 @@ func walk_to(point: Vector3, timeout: float = 12.0) -> bool:
 func run(scene: Node3D) -> void:
 	game=scene
 	player=game.player
-	folder=ProjectSettings.globalize_path("res://../previews/adventure/")
+	folder=preload("res://tools/qa_support.gd").output_folder("adventure")
 	DirAccess.make_dir_recursive_absolute(folder)
 	await settle(1.5)
 	if "--qa-guardian" in OS.get_cmdline_user_args():
 		await guardian_checks()
-		write_report()
+		await write_report()
 		return
 	if "--qa-avatar" in OS.get_cmdline_user_args():
 		await avatar_checks()
-		write_report()
+		await write_report()
 		return
 	if "--qa-combat" in OS.get_cmdline_user_args():
 		await combat_checks()
-		write_report()
+		await write_report()
 		return
 	if "--qa-cinematics" in OS.get_cmdline_user_args():
 		await cinematic_checks()
-		write_report()
+		await write_report()
 		return
 	if "--qa-gamepad" in OS.get_cmdline_user_args():
 		await gamepad_checks()
-		write_report()
+		await write_report()
 		return
 	if "--qa-memories" in OS.get_cmdline_user_args():
 		await memory_checks()
-		write_report()
+		await write_report()
 		return
 	if "--qa-ramp" in OS.get_cmdline_user_args():
 		GameEvents.puzzle_solved=true
@@ -98,13 +98,13 @@ func run(scene: Node3D) -> void:
 		await settle()
 		check(await walk_to(Vector3(4,6,-57)),"Balcony ramp")
 		print("BALCONY_RESULT ", player.global_position)
-		get_tree().quit(0 if failures.is_empty() else 1)
+		await preload("res://tools/qa_support.gd").finish(get_tree(), 0 if failures.is_empty() else 1)
 		return
 	check(game.get_node("Zones").get_child_count()==4,"Four named zones")
 	check(player.animator != null,"Imported AnimationPlayer")
 	check(player.animation_names.size()>=10,"Expanded skeletal animation states")
 	var skeleton:Skeleton3D=player.visual.find_child("Skeleton3D",true,false) as Skeleton3D
-	check(skeleton!=null and skeleton.get_bone_count()==65,"65-bone Quaternius Skeleton3D")
+	check(skeleton!=null and skeleton.get_bone_count()==65,"65-bone humanoid Skeleton3D")
 	check(game.hud.energy_bar is TextureProgressBar,"TextureProgressBar HUD")
 	check(player.is_on_floor(),"Player rests on ground")
 	check(ProjectSettings.get_setting("application/run/main_scene")=="res://scenes/title_menu.tscn" and ResourceLoader.exists("res://scenes/prologue_comic.tscn"),"Title menu is the game entry and leads to the comic prologue")
@@ -117,7 +117,7 @@ func run(scene: Node3D) -> void:
 	check(not is_instance_valid(tutorial_echo) or tutorial_echo.get("purified"),"Tutorial echo can be purified by pulse")
 	if "--qa-polish" in OS.get_cmdline_user_args():
 		await polish_checks()
-		write_report()
+		await write_report()
 		return
 	await capture("01_entrada")
 	check(await walk_to(Vector3(0,0,-1)),"Walk through entrance arch")
@@ -203,7 +203,7 @@ func run(scene: Node3D) -> void:
 	player.velocity=Vector3.ZERO
 	await settle(.5)
 	await capture("07_inicio_final")
-	write_report()
+	await write_report()
 
 
 func write_report() -> void:
@@ -220,7 +220,21 @@ func write_report() -> void:
 	file.store_string(JSON.stringify(report,"\t"))
 	file.close()
 	print("ADVENTURE_QA ",JSON.stringify(report))
-	get_tree().quit(0 if failures.is_empty() else 1)
+	await preload("res://tools/qa_support.gd").finish(get_tree(), 0 if failures.is_empty() else 1)
+
+
+func avatar_bounds() -> AABB:
+	var result := AABB()
+	var first := true
+	for node in player.visual.find_children("*", "MeshInstance3D", true, false):
+		var mesh := node as MeshInstance3D
+		if not mesh.skin: continue
+		var baked := mesh.bake_mesh_from_current_skeleton_pose()
+		if not baked: continue
+		var box: AABB = (player.global_transform.affine_inverse() * mesh.global_transform) * baked.get_aabb()
+		result = box if first else result.merge(box)
+		first = false
+	return result
 
 
 func avatar_checks() -> void:
@@ -240,13 +254,29 @@ func avatar_checks() -> void:
 	player.set_physics_process(false)
 	var skeleton: Skeleton3D = player.visual.find_child("Skeleton3D", true, false)
 	check(skeleton.get_bone_count() == 65, "Imported humanoid retains finger and toe bones")
-	for clip in ["idle", "walk", "run", "jump", "land", "pulse", "hurt", "dodge"]:
+	var textured_surfaces := 0
+	for node in player.visual.find_children("*", "MeshInstance3D", true, false):
+		var mesh := node as MeshInstance3D
+		if not mesh.skin: continue
+		for surface in mesh.mesh.get_surface_count():
+			var material := mesh.get_active_material(surface) as BaseMaterial3D
+			if material and material.albedo_texture and material.normal_texture and material.roughness_texture:
+				textured_surfaces += 1
+	check(textured_surfaces > 0, "Neri imports base color, normal and roughness textures")
+	for clip in ["idle", "walk", "run", "jump", "fall", "land", "interact", "wave", "pulse", "hurt", "dodge"]:
 		player.animator.play(player.animation_names[clip])
 		await settle(0.22)
 		check(player.animator.is_playing(), "Animation plays: " + clip)
 		var hand: Transform3D = skeleton.get_bone_global_pose(skeleton.find_bone("hand_l"))
 		await settle(0.1)
 		check(hand != skeleton.get_bone_global_pose(skeleton.find_bone("hand_l")), "Articulated motion: " + clip)
+		var body := avatar_bounds()
+		check(body.size.length() > 0.5 and body.size.length() < 3.5, "Skinned mesh bounds remain plausible: " + clip)
+		if clip not in ["jump", "fall"]:
+			check(body.position.y > -0.03, "Grounded animation stays above the floor: " + clip)
+		if clip == "idle":
+			check(body.position.y > -0.08 and body.position.y < 0.12, "Idle feet align with the gameplay floor")
+			check(body.end.y > 1.6 and body.end.y < 1.9, "Idle body reaches the intended height")
 		await capture("avatar_" + clip)
 	player.visual.rotation.y = PI
 	player.animator.play(player.animation_names["idle"])

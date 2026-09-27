@@ -10,7 +10,7 @@ const Audio = preload("res://scripts/audio_manager.gd")
 const MAIN_SCENE := "res://scenes/main_island.tscn"
 const PROLOGUE_SCENE := "res://scenes/prologue_comic.tscn"
 const LevelData = preload("res://scripts/level_data.gd")
-const VERSION_TEXT := "Capítulos I y II · versión 0.7"
+const VERSION_TEXT := "Capítulos I y II · demo 0.7.1"
 
 var world: Node3D
 var camera: Camera3D
@@ -333,7 +333,7 @@ func _start_new_game() -> void:
 
 
 func _watch_prologue() -> void:
-	GameEvents.story_seen.erase("prologue")
+	GameEvents.replay_prologue = true
 	_leave(PROLOGUE_SCENE)
 
 
@@ -402,7 +402,7 @@ func _unhandled_input(event: InputEvent) -> void:
 # --- Validación --------------------------------------------------------------------------------
 
 func _qa() -> void:
-	var folder := ProjectSettings.globalize_path("res://../previews/adventure/")
+	var folder := preload("res://tools/qa_support.gd").output_folder("adventure")
 	DirAccess.make_dir_recursive_absolute(folder)
 	var checks: Array[String] = []
 	var failures: Array[String] = []
@@ -449,7 +449,7 @@ func _qa() -> void:
 	file.store_string(JSON.stringify(report, "\t"))
 	file.close()
 	print("MENU_QA ", JSON.stringify(report))
-	get_tree().quit(0 if failures.is_empty() else 1)
+	await preload("res://tools/qa_support.gd").finish(get_tree(), 0 if failures.is_empty() else 1)
 
 
 func _capture(path: String) -> void:

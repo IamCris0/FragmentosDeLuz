@@ -59,7 +59,9 @@ func _build_visual() -> void:
 	column.material_override = material
 	# Las corrientes laterales solo se ven por sus ráfagas (una caja translúcida taparía el paisaje).
 	if lift > 0.0: add_child(column)
-	else: column = null
+	else:
+		column.free()
+		column = null
 	particles = GPUParticles3D.new()
 	particles.name = "WindMotes"
 	particles.amount = 40 if lift > 0.0 else 24
