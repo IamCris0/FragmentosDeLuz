@@ -291,6 +291,8 @@ func avatar_checks() -> void:
 	check(journal.get_global_rect().end.y <= 640 and journal.position.y >= 0, "Journal fits minimum window")
 	check(not save_button.get_global_rect().intersects(close_button.get_global_rect()), "Journal actions do not overlap")
 	check(save_button.pressed.get_connections().size() == 1, "Manual save button is connected")
+	for indicator in ["DestelloBank", "ShieldStatus", "Compass"]:
+		check(game.hud.root.get_node(indicator).get_index() < game.hud.shade.get_index(), "HUD indicator stays behind modals: " + indicator)
 	await capture("journal_800")
 
 

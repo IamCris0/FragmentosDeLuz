@@ -808,6 +808,9 @@ func _phase7_ui() -> void:
 	compass_text.position = Vector2(0, 44)
 	compass_box.add_child(compass_text)
 	compass_box.hide()
+	# Gameplay counters must remain beneath the shared modal backdrop.
+	for indicator in [bank, shield_label, compass_box]:
+		root.move_child(indicator, shade.get_index())
 	var menu: VBoxContainer = $HUD/PauseMenu/VBoxContainer
 	var star_button := button(menu, "Constellation", "Constelación")
 	menu.move_child(star_button, menu.get_node("Journal").get_index() + 1)
