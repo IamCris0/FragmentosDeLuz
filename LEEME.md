@@ -1,5 +1,7 @@
 # Fragmentos de Luz: El Faro Dormido y La Señal Imposible
 
+**Actualización de demo 0.7.1, 27 de septiembre de 2026:** Neri usa ahora el modelo Meshy texturizado de `referencias-assets/09_modelo_neri/`, adaptado a 65 huesos y once animaciones. El editable vigente es `blender/neri_demo.blend`. Se corrigieron continuidad del prólogo, viajes con fallo de guardado, acciones debajo de ventanas del mapa y pausas del jefe. Consulta `docs/DEMO_0_7_1.md` para las comprobaciones y limitaciones; las secciones de fases anteriores son historial.
+
 Capítulo jugable construido a partir de las referencias visuales y guías recibidas de Miora. Es una aventura 3D estilizada en Godot 4 con assets producidos en Blender, menú principal con la isla en vivo, prólogo tipo cómic narrado, cinemáticas en tiempo real, recorrido de tercera persona, tutorial contextual, enemigos de eco, pulso defensivo, historia, puzzle de runas, ascensor, guardián final, HUD, guardado local, banda sonora orquestal, voces y soporte de mando. **Fase 6, validada el 25 de septiembre de 2026:** cinemáticas, menú principal, nueva Luma, música, voces, memorias coleccionables, dificultad, islas mejoradas y mando. **Fase 7, 25 de septiembre de 2026:** Capítulo II · *La Señal Imposible*, con tres islas nuevas, la Constelación de Neri (árbol de habilidades), la Carta del archipiélago, un jefe, voces, música y efectos nuevos. Son dos capítulos jugables, todavía no una campaña terminada.
 
 ## Abrir
@@ -114,7 +116,7 @@ La secuencia incorrecta reinicia el puzzle. Los fragmentos y la reliquia no se d
 
 ## Sistemas incluidos
 
-- Neri: humanoide Quaternius CC0 adaptado en Blender, 23.397 triángulos, 65 huesos con dedos y pies articulados, once clips derivados de Universal Animation Library, túnica, mochila y escáner. `CharacterBody3D`, `SpringArm3D` y `AnimationTree` para movimiento, cámara, pulso, esquiva y transiciones. El archivo editable es `blender/neri_quaternius.blend`.
+- Neri: modelo Meshy texturizado proporcionado por el autor, 40.000 triángulos, 65 huesos y once clips derivados de Universal Animation Library. `CharacterBody3D`, `SpringArm3D` y `AnimationTree` para movimiento, cámara, pulso, esquiva y transiciones. El archivo editable vigente es `blender/neri_demo.blend`; los editables anteriores son históricos.
 - HUD: energía, contador 0/7, objetivo contextual, zona actual, tutorial, medidores de pulso y esquiva, integridad del guardián, amenaza cercana, prompt `[E]`, diálogos de Luma, pausa, diario, volumen y reinicio de partida.
 - Enemigos: cinco ecos con patrulla, persecución limitada por suelo y obstáculos, aviso dorado antes de atacar, recuperación, aturdimiento real y purificación persistente. Puedes alejarte del ataque o interrumpirlo con Q. El daño tiene un breve periodo de protección y retrasa la regeneración; agotar la energía devuelve al punto de control. Los diálogos detienen los ataques.
 - Mundo: cuatro zonas con nombres, geometría modular, árboles, cristales, columnas, puentes, plataformas y fragmentos coleccionables.
@@ -207,7 +209,7 @@ La prueba adicional de presentación comprueba movimiento visual, vegetación, a
 
 ## Fuentes y límites
 
-Cuerpo y cabello: [Quaternius Universal Base Characters Standard](https://quaternius.com/packs/universalbasecharacters.html). Animaciones: [Quaternius Universal Animation Library Standard](https://quaternius.com/packs/universalanimationlibrary.html). Ambos son CC0; las licencias originales están en `source_assets/quaternius/`. La base gratuita utilizada es Superhero Male, ajustada de proporciones y vestida para Neri: tiene un aspecto más adulto que la ilustración de Miora. No es una reproducción exacta de esa referencia ni incluye expresiones faciales o apoyo de pies con IK.
+Cuerpo y texturas actuales: modelo Meshy proporcionado por el autor; verificar derechos del plan de generación antes de distribuirlo. Animaciones: [Quaternius Universal Animation Library Standard](https://quaternius.com/packs/universalanimationlibrary.html), CC0, con licencias en `source_assets/quaternius/`. El cuerpo Quaternius Superhero Male de fases anteriores queda como fuente histórica, pero ya no es la geometría jugable. La licencia CC0 de las animaciones no se extiende automáticamente al nuevo modelo. No hay expresiones faciales ni apoyo de pies con IK.
 
 Música de la fase 6: compuesta por procedimientos en MIDI e interpretada con el banco FluidR3 GM (licencia MIT); no es una grabación con músicos. Voces: síntesis de voz offline. Luma usa Coqui TTS (Tacotron2-DDC español, MPL 2.0, corpus M-AILABS) y Neri y el cronista usan Piper TTS (MIT) con la voz carlfm (dominio público). Suenan naturales en ritmo y entonación, pero no sustituyen a actores de doblaje. Tipografías Cinzel y Nunito: SIL Open Font License (`godot/assets/fonts/OFL.txt`). Higgsfield, Magnific y Krea no tenían créditos durante esta fase, así que ninguna imagen, vídeo o voz se generó con ellos. La música y las voces se pueden reemplazar conservando los nombres de archivo.
 

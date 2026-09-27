@@ -1,5 +1,21 @@
 # Fragmentos de Luz: base de produccion
 
+## Demo 0.7.1: estabilizacion y Neri texturizado
+
+Revision del 27 de septiembre de 2026, documentada en `docs/DEMO_0_7_1.md`.
+El constructor vigente es `source_tools/build_neri_demo.py`; el editable es
+`blender/neri_demo.blend`. Usa la nueva fuente de `referencias-assets/09_modelo_neri/`,
+con tres mapas PBR 2K, 40.000 triangulos, 65 huesos y once clips. El constructor
+Quaternius anterior requiere confirmacion explicita para no reemplazar este modelo.
+
+`source_tools/validate_demo.py` agrupa las pruebas existentes y las nuevas regresiones.
+Los resultados van a `artifacts/validation/`, con un directorio nuevo por ejecucion.
+No se usan los informes historicos como evidencia de una revision posterior.
+Los modos QA no leen ni escriben el progreso real del jugador. Esta revision
+corrige continuidad del prologo, cancelacion de viajes al fallar el guardado,
+ventanas modales del mapa y pausas completas del Heraldo. Las fases siguientes
+son historial y sus descripciones del avatar ya no corresponden al modelo vigente.
+
 ## Carpeta de trabajo
 
 Continuar todas las siguientes fases directamente en `C:\Users\gcris\OneDrive\Documentos\Proyectos\Game\FragmentosDeLuz`, por peticion del usuario. No trabajar en las entregas versionadas ni volver a copiar encima desde ellas: ahora son instantaneas anteriores. No modificar `SenalPerdida`.
