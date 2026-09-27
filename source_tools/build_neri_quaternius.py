@@ -15,7 +15,11 @@ SOURCE.mkdir(parents=True, exist_ok=True)
 args_parser = argparse.ArgumentParser()
 args_parser.add_argument('--base-pack', type=Path)
 args_parser.add_argument('--animation-pack', type=Path)
+args_parser.add_argument('--rebuild-legacy-avatar', action='store_true')
 args = args_parser.parse_args(sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else [])
+if not args.rebuild_legacy_avatar:
+    raise SystemExit('Legacy avatar builder. Use build_neri_demo.py for the current textured Neri. '
+                     'Explicit --rebuild-legacy-avatar is required to replace it with the old model.')
 
 
 def stage_gltf(source, folder, search_root):
