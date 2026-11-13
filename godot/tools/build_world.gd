@@ -137,9 +137,10 @@ func island(parent: Node, title: String, center: Vector3, extent: Vector2) -> No
 		model(zone,"environment/fern","Fern",Vector3(x,.05,z),Vector3.ONE*rng.randf_range(.8,1.8))
 	for i in range(12):
 		var side:int=1 if i%2 else -1
-		var pos:=Vector3(side*rng.randf_range(extent.x*.32,extent.x*.40),-.08,rng.randf_range(-extent.y*.35,extent.y*.35))
-		var boulder:=model(zone,"environment/island_rock","WeatheredBoulder",pos,Vector3(.20,.14,.16))
-		boulder.rotation.z=PI
+		var pos:=Vector3(side*rng.randf_range(extent.x*.32,extent.x*.40),0,rng.randf_range(-extent.y*.35,extent.y*.35))
+		# Roca de Meshy (source_tools/build_meshy_environment.py); el giro y la escala no consumen el rng.
+		var boulder:=model(zone,"environment/boulder","WeatheredBoulder",pos,Vector3.ONE*(.7+.12*(i%4)))
+		boulder.rotation.y=i*2.4
 	for side in [-1,1]:
 		for i in range(3):
 			box(zone,"BoundaryStone",Vector3(side*(extent.x*.5-.35),.35,-extent.y*.25+i*3),Vector3(.45,.7,2.8),stone[2])

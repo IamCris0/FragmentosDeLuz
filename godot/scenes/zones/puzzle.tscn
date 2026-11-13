@@ -1,6 +1,7 @@
 [gd_scene format=4]
 
 [ext_resource type="PackedScene" path="res://assets/environment/island_rock.glb" id="1_pptmw"]
+[ext_resource type="PackedScene" path="res://assets/environment/boulder.glb" id="meshy_boulder"]
 [ext_resource type="Texture2D" path="res://assets/environment/stone_painted.png" id="2_pyaob"]
 [ext_resource type="PackedScene" path="res://assets/environment/fern.glb" id="3_wedkh"]
 [ext_resource type="PackedScene" path="res://assets/environment/tree.glb" id="4_hbgjv"]
@@ -1784,41 +1785,41 @@ transform = Transform3D(1.5748969, 0, 0, 0, 1.5748969, 0, 0, 0, 1.5748969, -8.49
 [node name="@Node3D@251" type="Node3D" parent="." unique_id=1927121645 instance=ExtResource("3_wedkh")]
 transform = Transform3D(1.6947949, 0, 0, 0, 1.6947949, 0, 0, 0, 1.6947949, 6.824829, 0.05, -1.7424159)
 
-[node name="WeatheredBoulder" type="Node3D" parent="." unique_id=1592872263 instance=ExtResource("1_pptmw")]
-transform = Transform3D(-0.2, 1.2239188e-08, 0, -1.7484556e-08, -0.14, 0, 0, 0, 0.16, -8.073358, -0.08, 0.19872618)
+[node name="WeatheredBoulder" type="Node3D" parent="." unique_id=1592872263 instance=ExtResource("meshy_boulder")]
+transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, -0, 0, 0.7, -8.073358, 0, 0.19872618)
 
-[node name="@Node3D@252" type="Node3D" parent="." unique_id=1244531541 instance=ExtResource("1_pptmw")]
-transform = Transform3D(-0.2, 1.2239188e-08, 0, -1.7484556e-08, -0.14, 0, 0, 0, 0.16, 8.129912, -0.08, -1.5863338)
+[node name="@Node3D@252" type="Node3D" parent="." unique_id=1244531541 instance=ExtResource("meshy_boulder")]
+transform = Transform3D(-0.60466, 0, 0.55388, 0, 0.82, 0, -0.55388, 0, -0.60466, 8.129912, 0, -1.5863338)
 
-[node name="@Node3D@253" type="Node3D" parent="." unique_id=1159607268 instance=ExtResource("1_pptmw")]
-transform = Transform3D(-0.2, 1.2239188e-08, 0, -1.7484556e-08, -0.14, 0, 0, 0, 0.16, -8.687733, -0.08, 5.409274)
+[node name="@Node3D@253" type="Node3D" parent="." unique_id=1159607268 instance=ExtResource("meshy_boulder")]
+transform = Transform3D(0.082249, 0, -0.93639, 0, 0.94, 0, 0.93639, 0, 0.082249, -8.687733, 0, 5.409274)
 
-[node name="@Node3D@254" type="Node3D" parent="." unique_id=1004954978 instance=ExtResource("1_pptmw")]
-transform = Transform3D(-0.2, 1.2239188e-08, 0, -1.7484556e-08, -0.14, 0, 0, 0, 0.16, 7.5587816, -0.08, 1.8618717)
+[node name="@Node3D@254" type="Node3D" parent="." unique_id=1004954978 instance=ExtResource("meshy_boulder")]
+transform = Transform3D(0.64485, 0, 0.84129, 0, 1.06, 0, -0.84129, 0, 0.64485, 7.5587816, 0, 1.8618717)
 
-[node name="@Node3D@255" type="Node3D" parent="." unique_id=974727383 instance=ExtResource("1_pptmw")]
-transform = Transform3D(-0.2, 1.2239188e-08, 0, -1.7484556e-08, -0.14, 0, 0, 0, 0.16, -7.297379, -0.08, 3.21976)
+[node name="@Node3D@255" type="Node3D" parent="." unique_id=974727383 instance=ExtResource("meshy_boulder")]
+transform = Transform3D(-0.68928, 0, -0.12203, 0, 0.7, 0, 0.12203, 0, -0.68928, -7.297379, 0, 3.21976)
 
-[node name="@Node3D@256" type="Node3D" parent="." unique_id=1564990556 instance=ExtResource("1_pptmw")]
-transform = Transform3D(-0.2, 1.2239188e-08, 0, -1.7484556e-08, -0.14, 0, 0, 0, 0.16, 7.2310753, -0.08, -3.9440064)
+[node name="@Node3D@256" type="Node3D" parent="." unique_id=1564990556 instance=ExtResource("meshy_boulder")]
+transform = Transform3D(0.69196, 0, -0.43999, 0, 0.82, 0, 0.43999, 0, 0.69196, 7.2310753, 0, -3.9440064)
 
-[node name="@Node3D@257" type="Node3D" parent="." unique_id=700050747 instance=ExtResource("1_pptmw")]
-transform = Transform3D(-0.2, 1.2239188e-08, 0, -1.7484556e-08, -0.14, 0, 0, 0, 0.16, -8.135825, -0.08, 6.070734)
+[node name="@Node3D@257" type="Node3D" parent="." unique_id=700050747 instance=ExtResource("meshy_boulder")]
+transform = Transform3D(-0.24423, 0, 0.90772, 0, 0.94, 0, -0.90772, 0, -0.24423, -8.135825, 0, 6.070734)
 
-[node name="@Node3D@258" type="Node3D" parent="." unique_id=1583104369 instance=ExtResource("1_pptmw")]
-transform = Transform3D(-0.2, 1.2239188e-08, 0, -1.7484556e-08, -0.14, 0, 0, 0, 0.16, 7.2327247, -0.08, -1.7203159)
+[node name="@Node3D@258" type="Node3D" parent="." unique_id=1583104369 instance=ExtResource("meshy_boulder")]
+transform = Transform3D(-0.48832, 0, -0.94082, 0, 1.06, 0, 0.94082, 0, -0.48832, 7.2327247, 0, -1.7203159)
 
-[node name="@Node3D@259" type="Node3D" parent="." unique_id=745570805 instance=ExtResource("1_pptmw")]
-transform = Transform3D(-0.2, 1.2239188e-08, 0, -1.7484556e-08, -0.14, 0, 0, 0, 0.16, -7.64815, -0.08, 6.596525)
+[node name="@Node3D@259" type="Node3D" parent="." unique_id=745570805 instance=ExtResource("meshy_boulder")]
+transform = Transform3D(0.65745, 0, 0.24032, 0, 0.7, 0, -0.24032, 0, 0.65745, -7.64815, 0, 6.596525)
 
-[node name="@Node3D@260" type="Node3D" parent="." unique_id=214060873 instance=ExtResource("1_pptmw")]
-transform = Transform3D(-0.2, 1.2239188e-08, 0, -1.7484556e-08, -0.14, 0, 0, 0, 0.16, 8.656483, -0.08, -0.054442406)
+[node name="@Node3D@260" type="Node3D" parent="." unique_id=214060873 instance=ExtResource("meshy_boulder")]
+transform = Transform3D(-0.75807, 0, 0.31263, 0, 0.82, 0, -0.31263, 0, -0.75807, 8.656483, 0, -0.054442406)
 
-[node name="@Node3D@261" type="Node3D" parent="." unique_id=225304082 instance=ExtResource("1_pptmw")]
-transform = Transform3D(-0.2, 1.2239188e-08, 0, -1.7484556e-08, -0.14, 0, 0, 0, 0.16, -7.4380784, -0.08, -6.0004535)
+[node name="@Node3D@261" type="Node3D" parent="." unique_id=225304082 instance=ExtResource("meshy_boulder")]
+transform = Transform3D(0.39873, 0, -0.85124, 0, 0.94, 0, 0.85124, 0, 0.39873, -7.4380784, 0, -6.0004535)
 
-[node name="@Node3D@262" type="Node3D" parent="." unique_id=1671500513 instance=ExtResource("1_pptmw")]
-transform = Transform3D(-0.2, 1.2239188e-08, 0, -1.7484556e-08, -0.14, 0, 0, 0, 0.16, 8.697357, -0.08, -2.664287)
+[node name="@Node3D@262" type="Node3D" parent="." unique_id=1671500513 instance=ExtResource("meshy_boulder")]
+transform = Transform3D(0.31683, 0, 1.0115, 0, 1.06, 0, -1.0115, 0, 0.31683, 8.697357, 0, -2.664287)
 
 [node name="BoundaryStone" type="StaticBody3D" parent="." unique_id=1686493923]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.65, 0.35, -5)

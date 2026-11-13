@@ -1,0 +1,45 @@
+{
+  "arch": {
+    "target": "entrance_arch",
+    "triangles": 12248,
+    "size_m": [
+      7.357,
+      2.748,
+      6.411
+    ],
+    "min_z": -0.801
+  },
+  "tree": {
+    "target": "tree",
+    "triangles": 8633,
+    "size_m": [
+      3.996,
+      2.957,
+      4.26
+    ],
+    "min_z": -0.06,
+    "removed_faces": 0
+  },
+  "column": {
+    "target": "column",
+    "triangles": 4809,
+    "size_m": [
+      1.369,
+      1.377,
+      2.92
+    ],
+    "min_z": -0.02,
+    "removed_faces": 0
+  },
+  "boulder": {
+    "target": "boulder",
+    "triangles": 3157,
+    "size_m": [
+      2.158,
+      2.155,
+      1.08
+    ],
+    "min_z": -0.08,
+    "removed_faces": 0
+  }
+}
