@@ -27,6 +27,7 @@ var hurt_this_exposure: bool = false
 var damage_enabled: bool = true
 var player: CharacterBody3D
 var visual: Node3D
+var style_materials: Array[ShaderMaterial] = []
 var corona: Node3D
 var mask: Node3D
 var shards: Array[Node3D] = []
@@ -54,6 +55,7 @@ func _ready() -> void:
 	if arena_center == Vector3.ZERO and get_parent() is Node3D:
 		arena_center = (get_parent() as Node3D).global_position
 	visual = get_node_or_null("Visual") as Node3D
+	style_materials = preload("res://scripts/meshy_style.gd").apply(visual, true)
 	if visual:
 		corona = visual.find_child("HeraldoCorona", true, false) as Node3D
 		mask = visual.find_child("HeraldoMask", true, false) as Node3D
@@ -339,6 +341,8 @@ func _stop_sweep() -> void:
 
 func _animate(delta: float) -> void:
 	if not visual: return
+	for material in style_materials:
+		material.set_shader_parameter("glow_boost", 2.6 if windup > 0.0 else (1.8 if state == "exposed" else 1.0))
 	if is_instance_valid(player) and state != "purified":
 		var to_player := player.global_position - global_position
 		visual.rotation.y = lerp_angle(visual.rotation.y, atan2(to_player.x, to_player.z), 1.0 - exp(-delta * 3.0))

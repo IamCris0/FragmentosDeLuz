@@ -11,6 +11,8 @@ var dash_hit: bool = false
 var telegraph: MeshInstance3D
 var telegraph_material: StandardMaterial3D
 var wings: Array[Node3D] = []
+var wing_animator: AnimationPlayer
+var wing_clips: Dictionary = {}
 
 
 func _ready() -> void:
@@ -36,6 +38,14 @@ func _ready() -> void:
 	telegraph.hide()
 	add_child(telegraph)
 	if visual:
+		wing_animator = visual.find_child("AnimationPlayer", true, false) as AnimationPlayer
+		if wing_animator:
+			for clip in wing_animator.get_animation_list():
+				for action in ["CefiroFlight", "CefiroCharge", "CefiroRest"]:
+					if str(clip).ends_with(action):
+						wing_clips[action] = clip
+						wing_animator.get_animation(clip).loop_mode = Animation.LOOP_LINEAR
+			_animate_wings(false)
 		for side in ["L", "R"]:
 			var wing := visual.find_child("CefiroWing" + side, true, false) as Node3D
 			if wing: wings.append(wing)
@@ -97,6 +107,8 @@ func _physics_process(delta: float) -> void:
 	if player.locked:
 		telegraph.hide()
 		dash_time = 0.0
+		if wing_animator: wing_animator.speed_scale = 0.0
+		return
 	if dash_time > 0.0:
 		dash_time -= delta
 		var before := global_position
@@ -116,6 +128,18 @@ func _physics_process(delta: float) -> void:
 	var tired := mode == Mode.RECOVERY and dash_time <= 0.0
 	visual.position.y = (-0.35 if tired else sin(phase * 2.0) * 0.15)
 	visual.rotation.z = sin(phase * 1.3) * 0.12
+	_animate_wings(tired)
+
+
+func _animate_wings(tired: bool) -> void:
+	if wing_animator:
+		wing_animator.speed_scale = 1.0
+		var action := "CefiroCharge" if mode == Mode.WINDUP else ("CefiroRest" if tired or mode == Mode.STUNNED else "CefiroFlight")
+		var clip: StringName = wing_clips.get(action, &"")
+		if not clip.is_empty() and wing_animator.current_animation != clip:
+			wing_animator.play(clip, 0.18)
+		return
+	# Compatible with the original procedural model, if used in a custom scene.
 	var flap_speed := 12.0 if mode == Mode.WINDUP else (3.0 if tired else 5.0)
 	for i in wings.size():
 		var side := -1.0 if i == 0 else 1.0

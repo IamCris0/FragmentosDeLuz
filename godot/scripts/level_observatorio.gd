@@ -163,6 +163,11 @@ func begin_fight() -> void:
 	var audio := get_node_or_null("AudioManager")
 	if audio: audio.target_theme = 1
 	boss.start_fight()
+	# Frame the floating boss once on entry. The camera remains under player control.
+	var direction: Vector3 = boss.global_position - player.global_position
+	player.pivot.global_rotation.y = atan2(-direction.x, -direction.z)
+	player.arm.rotation.x = 0.08
+	player.arm.spring_length = maxf(player.arm.spring_length, 6.5)
 	GameEvents.set_objective("Purifica al Heraldo del Eclipse")
 	_update_hint()
 

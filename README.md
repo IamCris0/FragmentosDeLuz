@@ -6,6 +6,10 @@ cuatro islas: Auralia, Grutas Prismaticas, Picos del Cefiro y Observatorio Estel
 **Demo 0.7.1, en estabilizacion.** Incluye a Neri con el modelo texturizado
 proporcionado por el autor, 65 huesos y once animaciones. No es una campana terminada.
 
+Actualización de noviembre: ocho modelos Meshy integrados, Céfiro con alas articuladas,
+materiales del Heraldo renovados y cámara de combate corregida.
+Consulta [la revisión artística](docs/ARTE_MESHY_2026_11.md).
+
 ## Jugar o editar
 
 1. Instala Godot; esta revision se ha probado con **Godot 4.7.2**, renderizador Forward+.

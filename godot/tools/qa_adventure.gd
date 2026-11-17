@@ -766,6 +766,16 @@ func gamepad_checks() -> void:
 	await settle(0.4)
 	pad_axis(JOY_AXIS_RIGHT_X, 0.0)
 	check(absf(player.pivot.rotation.y - yaw) > 0.3, "Right stick turns the camera")
+	var pitch_before: float = player.arm.rotation.x
+	var inversion_before: bool = Preferences.invert_y
+	Preferences.invert_y = false
+	pad_axis(JOY_AXIS_RIGHT_Y, -1.0)
+	await settle(1.2)
+	pad_axis(JOY_AXIS_RIGHT_Y, 0.0)
+	check(player.arm.rotation.x > 0.3 and player.arm.rotation.x <= player.CAMERA_PITCH_MAX,
+		"Camera can look up at flying enemies without exceeding its limit")
+	Preferences.invert_y = inversion_before
+	player.arm.rotation.x = pitch_before
 	check(game.hud.using_pad and game.hud.pulse_label.text.begins_with("Y"), "HUD switches to gamepad button hints")
 	GameEvents.set_energy(100)
 	pad_button(JOY_BUTTON_B, true)

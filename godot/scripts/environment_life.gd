@@ -44,6 +44,9 @@ func _ready() -> void:
 
 
 func apply_foliage(scene: Node) -> void:
+	wind_surfaces = 0
+	for material in preload("res://scripts/meshy_style.gd").apply(scene):
+		if float(material.get_shader_parameter("sway")) > 0.0: wind_surfaces += 1
 	var materials:Dictionary={}
 	for piece in scene.find_children("*","MeshInstance3D",true,false):
 		if not piece.mesh:continue

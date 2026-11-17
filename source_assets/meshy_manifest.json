@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "updated_on": "2026-11-17",
+  "provenance": "Recovered from referenced development chat 01a1dfd8-4196-7522-85a5-620b1ac0691a, November 13. Identifiers are historical, not a new API lookup.",
+  "current_session": {
+    "credits_spent": 10,
+    "live_balance_verified": true,
+    "closing_balance": 224,
+    "retexture_task": "01a1e9fd-52f1-7129-b161-aeb849f39609",
+    "retexture_resource": "retexture",
+    "retexture_file": "source_assets/meshy_enemies/heraldo_retextured.glb"
+  },
+  "historical_credit_ledger": {
+    "reported_opening_balance": 378,
+    "environment_batch": 72,
+    "enemies_batch": 72,
+    "reported_closing_balance": 234,
+    "warning": "Historical report only; query the active Meshy account before starting paid tasks."
+  },
+  "assets": [
+    {
+      "asset": "arch",
+      "resource": "image-to-3d",
+      "task_id": "01a1d562-2290-7184-85a2-ed8ce53949c6",
+      "parent_task_id": "01a1d561-8113-74c9-844b-fce8aca58e49",
+      "model": "meshy-t2",
+      "texture_model": "meshy-n1",
+      "target_triangles": 12000,
+      "raw_model": "source_assets/meshy_umbral/arch_raw.glb"
+    },
+    {
+      "asset": "tree",
+      "resource": "image-to-3d",
+      "task_id": "01a1d562-269d-744e-8d3d-6ad6cd5de70c",
+      "parent_task_id": "01a1d561-822b-71b4-bec7-242e3df60d1a",
+      "model": "meshy-t2",
+      "texture_model": "meshy-n1",
+      "target_triangles": 8000,
+      "raw_model": "source_assets/meshy_umbral/tree_raw.glb"
+    },
+    {
+      "asset": "column",
+      "resource": "image-to-3d",
+      "task_id": "01a1d562-29cf-7311-ab9f-3ab03b89fff9",
+      "parent_task_id": "01a1d561-830b-70fe-b871-911723608d75",
+      "model": "meshy-t2",
+      "texture_model": "meshy-n1",
+      "target_triangles": 5000,
+      "raw_model": "source_assets/meshy_umbral/column_raw.glb"
+    },
+    {
+      "asset": "boulder",
+      "resource": "image-to-3d",
+      "task_id": "01a1d562-2cec-7156-b3a2-6ceb2b9f6daf",
+      "parent_task_id": "01a1d561-8416-707e-80e3-fa7879319b43",
+      "model": "meshy-t2",
+      "texture_model": "meshy-n1",
+      "target_triangles": 3000,
+      "raw_model": "source_assets/meshy_umbral/boulder_raw.glb"
+    },
+    {
+      "asset": "echo",
+      "resource": "image-to-3d",
+      "task_id": "01a1d58f-136d-7310-8908-deaf2eb67300",
+      "parent_task_id": "01a1d58e-4702-7258-afaa-761b733165ab",
+      "model": "meshy-t2",
+      "texture_model": "meshy-n1",
+      "target_triangles": 5000,
+      "raw_model": "source_assets/meshy_enemies/echo_raw.glb"
+    },
+    {
+      "asset": "vigia",
+      "resource": "image-to-3d",
+      "task_id": "01a1d58f-1813-722f-b7b9-46c62959ca72",
+      "parent_task_id": "01a1d58e-47fa-7029-9095-6fccaf3f86e6",
+      "model": "meshy-t2",
+      "texture_model": "meshy-n1",
+      "target_triangles": 5000,
+      "raw_model": "source_assets/meshy_enemies/vigia_raw.glb"
+    },
+    {
+      "asset": "cefiro",
+      "resource": "image-to-3d",
+      "task_id": "01a1d58f-1d22-7790-aefc-c2a04506ef0d",
+      "parent_task_id": "01a1d58e-48ea-72ef-80e8-cda72c44ac7f",
+      "model": "meshy-t2",
+      "texture_model": "meshy-n1",
+      "target_triangles": 5000,
+      "raw_model": "source_assets/meshy_enemies/cefiro_raw.glb"
+    },
+    {
+      "asset": "heraldo",
+      "resource": "image-to-3d",
+      "task_id": "01a1d58f-200f-7566-983e-c220df061e1c",
+      "parent_task_id": "01a1d58e-4a04-7702-8b97-683a37a4bb17",
+      "model": "meshy-t2",
+      "texture_model": "meshy-n1",
+      "target_triangles": 10000,
+      "raw_model": "source_assets/meshy_enemies/heraldo_raw.glb"
+    }
+  ]
+}

@@ -74,11 +74,12 @@ def opening_floor(obj):
     return max(v.co.z for v in obj.data.vertices if abs(v.co.x) < half * 0.15 and v.co.z < limit) - low.z
 
 
-def render(obj, name):
+def render(obj, name, wide=1.0):
     os.makedirs(PREVIEW, exist_ok=True)
     scene = bpy.context.scene
     low, high = bounds(obj)
-    size = max(high.x - low.x, high.z - low.z)
+    low, high = low + obj.location, high + obj.location
+    size = max(high.x - low.x, high.z - low.z) * wide
     cam = bpy.data.objects.new("Cam", bpy.data.cameras.new("Cam"))
     scene.collection.objects.link(cam)
     cam.data.type = "ORTHO"
@@ -143,4 +144,5 @@ def main():
         json.dump(metrics, stream, indent=2)
 
 
-main()
+if __name__ == "__main__":
+    main()

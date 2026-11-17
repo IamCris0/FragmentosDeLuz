@@ -15,6 +15,8 @@ var playback: AnimationNodeStateMachinePlayback
 var animation_names: Dictionary = {}
 var sensitivity: float = 0.003
 var camera_drag: bool = false
+const CAMERA_PITCH_MIN := -0.85
+const CAMERA_PITCH_MAX := 0.65
 var land_time: float = 0.0
 var current_animation: String = ""
 var animation_speed: AnimationNodeTimeScale
@@ -408,7 +410,7 @@ func _pad_camera(delta: float) -> void:
 		return
 	var invert: float = -1.0 if Preferences.invert_y else 1.0
 	pivot.rotation.y -= look.x * PAD_CAMERA_SPEED * Preferences.camera_sensitivity * delta
-	arm.rotation.x = clampf(arm.rotation.x - look.y * invert * PAD_CAMERA_SPEED * 0.6 * Preferences.camera_sensitivity * delta, -0.85, 0.15)
+	arm.rotation.x = clampf(arm.rotation.x - look.y * invert * PAD_CAMERA_SPEED * 0.6 * Preferences.camera_sensitivity * delta, CAMERA_PITCH_MIN, CAMERA_PITCH_MAX)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -418,7 +420,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion and camera_drag and not locked:
 		var invert: float = -1.0 if Preferences.invert_y else 1.0
 		pivot.rotation.y -= event.relative.x * sensitivity * Preferences.camera_sensitivity
-		arm.rotation.x = clampf(arm.rotation.x - event.relative.y * invert * sensitivity * Preferences.camera_sensitivity, -0.85, 0.15)
+		arm.rotation.x = clampf(arm.rotation.x - event.relative.y * invert * sensitivity * Preferences.camera_sensitivity, CAMERA_PITCH_MIN, CAMERA_PITCH_MAX)
 	if event is InputEventMouseButton and event.pressed:
 		if event.button_index == MOUSE_BUTTON_WHEEL_UP: arm.spring_length = maxf(3, arm.spring_length - 0.4)
 		if event.button_index == MOUSE_BUTTON_WHEEL_DOWN: arm.spring_length = minf(7, arm.spring_length + 0.4)

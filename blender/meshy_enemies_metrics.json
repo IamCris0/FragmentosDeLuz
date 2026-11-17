@@ -1,0 +1,46 @@
+{
+  "echo": {
+    "nodes": [
+      "echo_sentinel"
+    ],
+    "triangles": 5007
+  },
+  "vigia": {
+    "nodes": [
+      "VigiaBody",
+      "VigiaRingA",
+      "VigiaRingB"
+    ],
+    "triangles": 5612
+  },
+  "cefiro": {
+    "bones": 3,
+    "clips_seconds": {
+      "CefiroFlight": 1.3333333333333333,
+      "CefiroCharge": 0.5833333333333334,
+      "CefiroRest": 2.0833333333333335
+    },
+    "continuous_mesh": true,
+    "source_vertices": 5498,
+    "nodes": [
+      "CefiroBody",
+      "CefiroRig"
+    ],
+    "triangles": 5355
+  },
+  "heraldo": {
+    "texture_source": "heraldo_retextured.glb",
+    "pbr": true,
+    "nodes": [
+      "HeraldoCore",
+      "HeraldoCorona",
+      "HeraldoShard_0",
+      "HeraldoShard_1",
+      "HeraldoShard_2",
+      "HeraldoShard_3",
+      "HeraldoShard_4",
+      "HeraldoShard_5"
+    ],
+    "triangles": 11686
+  }
+}

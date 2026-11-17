@@ -14,6 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 CASES = {
     "save": (["--script", "res://tools/qa_save_store.gd"], ["--qa"], "adventure/save_report.json"),
     "regressions": (["--script", "res://tools/qa_demo_regressions.gd"], ["--qa-regressions"], "demo/regressions_report.json"),
+    "meshy": (["--script", "res://tools/qa_meshy_assets.gd"], ["--qa-meshy"], "meshy/report.json"),
     "route": ([], ["--qa"], "adventure/qa_report.json"),
     "combat": ([], ["--qa", "--qa-combat"], "adventure/combat_report.json"),
     "guardian": ([], ["--qa", "--qa-guardian"], "adventure/guardian_report.json"),
@@ -59,7 +60,9 @@ def main():
         parser.error("Specify --godot with the Godot executable, or set GODOT_EXE.")
     if args.repeat < 1 or args.timeout < 1:
         parser.error("repeat and timeout must be positive")
-    names = args.cases or [name for name in CASES if args.visual or name not in {"avatar", "menu", "map", "art", "prologue"}]
+    if not args.visual and args.cases and "meshy" in args.cases:
+        parser.error("The meshy case bakes rendered skin poses; add --visual.")
+    names = args.cases or [name for name in CASES if args.visual or name not in {"avatar", "menu", "map", "art", "prologue", "meshy"}]
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S_%fZ")
     output = ROOT / "artifacts" / "validation" / stamp
     output.mkdir(parents=True)

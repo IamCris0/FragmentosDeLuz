@@ -18,6 +18,7 @@ var attack_time: float = 0.0
 var purified: bool = false
 var player: CharacterBody3D
 var visual: Node3D
+var style_materials: Array[ShaderMaterial] = []
 var core_light: OmniLight3D
 var damage_enabled: bool = true
 var alerted: bool = false
@@ -37,6 +38,7 @@ func _ready() -> void:
 	phase = randf() * TAU
 	player = get_tree().get_first_node_in_group("player") as CharacterBody3D
 	visual = get_node_or_null("Visual")
+	style_materials = preload("res://scripts/meshy_style.gd").apply(visual, true)
 	core_light = get_node_or_null("CoreLight") as OmniLight3D
 	collision_layer = 0
 	collision_mask = 2
@@ -145,7 +147,10 @@ func _physics_process(delta: float) -> void:
 		alerted = false
 		_move_towards(home + Vector3(cos(phase * 0.55), 0, sin(phase * 0.55)) * patrol_radius, speed * delta)
 	if visual:
-		visual.rotation.y += delta * (4.0 if mode == Mode.WINDUP else (0.2 if mode == Mode.STUNNED else 0.7))
+		# El modelo mira hacia +Z y la raiz avanza hacia -Z: se gira para dar la cara, y tiembla al cargar.
+		visual.rotation.y = PI + (sin(phase * 34.0) * 0.16 if mode == Mode.WINDUP else (sin(phase * 1.7) * 0.35 if mode == Mode.STUNNED else 0.0))
+		for material in style_materials:
+			material.set_shader_parameter("glow_boost", 2.6 if mode == Mode.WINDUP else (0.25 if mode == Mode.STUNNED else 1.0))
 		visual.position.y = sin(phase * 2.6) * 0.06
 	if core_light:
 		core_light.light_color = Color("ffc36c") if mode == Mode.WINDUP else (Color("75ffe1") if mode == Mode.STUNNED else Color("a18aee"))

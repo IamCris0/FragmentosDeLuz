@@ -900,6 +900,12 @@ func observatorio_dome() -> void:
 		if pillar.state == "charged": charged += 1
 	check(charged == 1, "One star pillar charges")
 	await settle(2.5)
+	var boss_screen: Vector2 = player.camera.unproject_position(game.boss.global_position)
+	var boss_top: Vector2 = player.camera.unproject_position(game.boss.global_position + Vector3.UP * 2.8)
+	var viewport_size: Vector2 = get_viewport().get_visible_rect().size
+	check(not player.camera.is_position_behind(game.boss.global_position)
+		and boss_screen.y > viewport_size.y * 0.1 and boss_screen.y < viewport_size.y * 0.85
+		and boss_top.y > 0.0, "Encounter camera frames the floating Heraldo and its crown")
 	await capture("observatorio_04_heraldo")
 	for round_index in 3:
 		var pillar: Node3D
