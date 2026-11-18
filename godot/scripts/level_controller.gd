@@ -32,6 +32,7 @@ func _enter_tree() -> void:
 
 func _ready() -> void:
 	qa_mode = "--qa" in OS.get_cmdline_user_args()
+	preload("res://scripts/art_direction.gd").apply(self)
 	preload("res://scripts/meshy_style.gd").apply(self)
 	GameEvents.set_cinematic(false)
 	GameEvents.set_hint("")

@@ -104,9 +104,11 @@ func run(scene: Node3D) -> void:
 	check(player.animator != null,"Imported AnimationPlayer")
 	check(player.animation_names.size()>=10,"Expanded skeletal animation states")
 	var skeleton:Skeleton3D=player.visual.find_child("Skeleton3D",true,false) as Skeleton3D
-	check(skeleton!=null and skeleton.get_bone_count()==65,"65-bone humanoid Skeleton3D")
+	check(skeleton!=null and skeleton.get_bone_count()==24,"Redesigned 24-bone humanoid Skeleton3D")
 	check(game.hud.energy_bar is TextureProgressBar,"TextureProgressBar HUD")
 	check(player.is_on_floor(),"Player rests on ground")
+	check(get_tree().get_nodes_in_group("redesigned_lantern").size() == 16, "All Auralia lanterns use the new model")
+	check(get_tree().get_nodes_in_group("redesigned_flagstone").size() > 100, "Paving upgrade includes automatically named tiles")
 	check(ProjectSettings.get_setting("application/run/main_scene")=="res://scenes/title_menu.tscn" and ResourceLoader.exists("res://scenes/prologue_comic.tscn"),"Title menu is the game entry and leads to the comic prologue")
 	check(InputMap.has_action("light_pulse"),"Light pulse input exists")
 	var enemies:Array=get_tree().get_nodes_in_group("enemy")
@@ -253,23 +255,23 @@ func avatar_checks() -> void:
 	player.animation_tree.active = false
 	player.set_physics_process(false)
 	var skeleton: Skeleton3D = player.visual.find_child("Skeleton3D", true, false)
-	check(skeleton.get_bone_count() == 65, "Imported humanoid retains finger and toe bones")
+	check(skeleton.get_bone_count() == 24 and skeleton.find_bone("LeftToeBase") >= 0 and skeleton.find_bone("RightHand") >= 0, "New rig includes hands and articulated feet")
 	var textured_surfaces := 0
 	for node in player.visual.find_children("*", "MeshInstance3D", true, false):
 		var mesh := node as MeshInstance3D
 		if not mesh.skin: continue
 		for surface in mesh.mesh.get_surface_count():
 			var material := mesh.get_active_material(surface) as BaseMaterial3D
-			if material and material.albedo_texture and material.normal_texture and material.roughness_texture:
+			if material and material.albedo_texture and material.albedo_texture.get_width() >= 2048:
 				textured_surfaces += 1
-	check(textured_surfaces > 0, "Neri imports base color, normal and roughness textures")
+	check(textured_surfaces > 0, "Neri imports the approved 2K painted texture")
 	for clip in ["idle", "walk", "run", "jump", "fall", "land", "interact", "wave", "pulse", "hurt", "dodge"]:
 		player.animator.play(player.animation_names[clip])
 		await settle(0.22)
 		check(player.animator.is_playing(), "Animation plays: " + clip)
-		var hand: Transform3D = skeleton.get_bone_global_pose(skeleton.find_bone("hand_l"))
+		var hand: Transform3D = skeleton.get_bone_global_pose(skeleton.find_bone("LeftHand"))
 		await settle(0.1)
-		check(hand != skeleton.get_bone_global_pose(skeleton.find_bone("hand_l")), "Articulated motion: " + clip)
+		check(hand != skeleton.get_bone_global_pose(skeleton.find_bone("LeftHand")), "Articulated motion: " + clip)
 		var body := avatar_bounds()
 		check(body.size.length() > 0.5 and body.size.length() < 3.5, "Skinned mesh bounds remain plausible: " + clip)
 		if clip not in ["jump", "fall"]:

@@ -1,0 +1,20 @@
+{
+  "neri": {
+    "concept": "01a1ebb1-cd57-75bf-b5a5-97bd8abf47c6",
+    "image_to_3d": "01a1ebb3-f1d1-7523-803d-6778a8dfa8fc",
+    "rigging": "01a1ebb5-14ba-73cf-84aa-2a0c767ee678",
+    "animate": "01a1ebb5-b3ce-7794-9352-cfa8286bfb94",
+    "credits": 44
+  },
+  "fern": {
+    "concept": "01a1ebb6-f367-7499-98eb-3195c31b3cf4",
+    "image_to_3d": "01a1ebb8-9aec-7514-a0c6-e9a9dd1ab25e",
+    "credits": 18
+  },
+  "lantern": {
+    "concept": "01a1ebb6-fe2d-7681-b9f5-87a279d72de9",
+    "image_to_3d": "01a1ebb8-a3e6-7103-a0e4-7f75050fe3c4",
+    "credits": 18
+  },
+  "credits_total": 80
+}

@@ -448,8 +448,8 @@ func _seq_arrival() -> void:
 	await path([Vector3(-24, 17, -66), Vector3(-9, 12.5, -73), Vector3(9, 10.5, -76)],
 		[Vector3(0, 9, -93), Vector3(0, 10, -94), Vector3(0, 10.5, -94)], 6.0, 50.0, 40.0)
 	say("LUMA", "…y, por fin, alguien ha escuchado la señal.", "vo_cine_arrival_2", 3.5)
-	await path([Vector3(0, 6.5, -20), Vector3(0, 3.4, -7), Vector3(0.4, 2.2, 1.0), Vector3(1.3, 1.75, 4.35)],
-		[Vector3(0, 2.5, 0), Vector3(0, 1.9, 4), Vector3(0, 1.6, 7), Vector3(0, 1.5, 7)], 7.0, 58.0, 42.0)
+	await path([Vector3(0, 6.5, -20), Vector3(0, 3.4, -7), Vector3(0.4, 2.2, 1.0), Vector3(1.3, 1.65, 4.35)],
+		[Vector3(0, 2.5, 0), Vector3(0, 1.9, 4), Vector3(0, 1.4, 7), Vector3(0, 1.34, 7)], 7.0, 58.0, 37.0)
 	await wait(0.6)
 
 

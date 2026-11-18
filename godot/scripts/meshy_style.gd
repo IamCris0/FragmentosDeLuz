@@ -9,6 +9,8 @@ const SHADER := "res://shaders/meshy_prop.gdshader"
 const TUNING := {
 	"Meshy_tree": {"glow": 0.0, "sway": 0.05},
 	"Meshy_boulder": {"glow": 1.2},
+	"Meshy_fern": {"glow": 0.0, "sway": 0.035, "sway_from": 0.03, "sway_to": 0.55},
+	"Meshy_sanctuary_lantern": {"glow": 1.8},
 }
 
 static var cache: Dictionary = {}

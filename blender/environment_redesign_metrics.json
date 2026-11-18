@@ -1,0 +1,22 @@
+{
+  "fern": {
+    "target": "fern",
+    "triangles": 1950,
+    "size_m": [
+      1.068,
+      1.068,
+      0.565
+    ],
+    "min_z": -0.015
+  },
+  "lantern": {
+    "target": "sanctuary_lantern",
+    "triangles": 3020,
+    "size_m": [
+      0.539,
+      0.541,
+      1.1
+    ],
+    "min_z": 0.0
+  }
+}

@@ -1,7 +1,7 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://scripts/player_controller.gd" id="1_y7kcb"]
-[ext_resource type="PackedScene" path="res://assets/characters/neri_quaternius.glb" id="2_plwmo"]
+[ext_resource type="PackedScene" path="res://assets/characters/neri_redesigned.glb" id="2_plwmo"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_gmphs"]
 radius = 0.27

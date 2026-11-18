@@ -15,6 +15,7 @@ var wind_surfaces: int=0
 
 func _ready() -> void:
 	var scene: Node = get_parent()
+	preload("res://scripts/art_direction.gd").apply(scene)
 	apply_foliage(scene)
 	for node in scene.get_node("Zones/Puzzle").find_children("ResonanceCrystal", "Node3D", true, false):
 		crystals.append(node)

@@ -8,7 +8,7 @@ var locked: bool = false
 var target: Node3D
 var coyote: float = 0.0
 var jump_buffer: float = 0.0
-var step_time: float = 0.0
+var step_distance: float = 0.0
 var interact_time: float = 0.0
 var animator: AnimationPlayer
 var playback: AnimationNodeStateMachinePlayback
@@ -249,11 +249,15 @@ func _physics_process(delta: float) -> void:
 	animation_tree.set("parameters/Cadence/scale",clampf(horizontal_speed/2.5,.6,1.6) if state=="walk" else (clampf(horizontal_speed/5.4,.6,1.5) if state=="run" else (0.45 if gliding else 1.)))
 	camera.fov=lerpf(camera.fov,(72. if gliding else (69. if sprinting else 65.)),1.-exp(-delta*4.))
 	_update_wings(delta)
-	if is_on_floor() and not dodging and direction.length() > 0.1:
-		step_time += delta
-		if step_time > (0.29 if sprinting else 0.33):
-			step_time = 0
-			GameEvents.sound_requested.emit("step")
+	if not locked and was_grounded and is_on_floor() and state in ["walk", "run"]:
+		var displacement := get_position_delta()
+		step_distance += Vector2(displacement.x, displacement.z).length()
+		var stride := 1.35 if state == "run" else 1.05
+		if step_distance >= stride:
+			step_distance -= stride
+			GameEvents.sound_requested.emit("step_run" if state == "run" else "step")
+	else:
+		step_distance = 0.0
 	if global_position.y < _fall_limit():
 		respawn()
 	var cooldown_total: float = GameEvents.pulse_cooldown()

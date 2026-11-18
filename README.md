@@ -3,8 +3,8 @@
 Aventura 3D de exploracion, puzles y combate ligero. Dos capitulos jugables en
 cuatro islas: Auralia, Grutas Prismaticas, Picos del Cefiro y Observatorio Estelar.
 
-**Demo 0.7.1, en estabilizacion.** Incluye a Neri con el modelo texturizado
-proporcionado por el autor, 65 huesos y once animaciones. No es una campana terminada.
+**Demo en desarrollo.** Neri utiliza el diseño aprobado, una textura pintada 2K,
+un esqueleto nuevo de 24 huesos y once estados de animación.
 
 Actualización de noviembre: ocho modelos Meshy integrados, Céfiro con alas articuladas,
 materiales del Heraldo renovados y cámara de combate corregida.
@@ -43,22 +43,15 @@ Estas pruebas aceleran la simulacion: **no son una medicion de rendimiento**.
 
 ## Modelo editable de Neri
 
-- Fuente texturizada: `referencias-assets/09_modelo_neri/` (se conserva intacta).
-- Esqueleto y animaciones de entrada: `source_assets/neri_meshy/neri_rigged_input.glb`.
-- Editable actual: `blender/neri_demo.blend`, con texturas empaquetadas.
-- Reconstruccion: `source_tools/build_neri_demo.py` con Blender 5.2.
-- Metricas verificables: `blender/neri_demo_metrics.json`.
+- El concepto, el modelo, el rig y las animaciones originales están en `source_assets/neri_redesign/`.
+- Abre `blender/neri_redesigned.blend` para editar el personaje y sus animaciones.
+- Consulta las medidas y duraciones verificadas en `blender/neri_redesigned_metrics.json`.
 
 ```powershell
-& 'C:\Program Files\Blender Foundation\Blender 5.2\blender.exe' --background --python-exit-code 1 --python source_tools/build_neri_demo.py
+& 'C:\Program Files\Blender Foundation\Blender 5.2\blender.exe' --background --python-exit-code 1 --python source_tools/build_neri_redesign.py
 ```
 
-El archivo del juego mantiene el nombre historico `neri_quaternius.glb` para no
-romper referencias; su geometria actual es el modelo Meshy texturizado, no el
-cuerpo Quaternius anterior. El constructor antiguo esta protegido contra una
-ejecucion accidental.
-
-![Neri texturizado dentro de Godot](docs/images/neri_demo_0_7_1.png)
+Godot carga `neri_redesigned.glb`. Los archivos del modelo anterior se conservan como referencia.
 
 ## Estado y procedencia
 
@@ -66,8 +59,5 @@ Consultar [LEEME.md](LEEME.md) para el recorrido y los controles completos,
 [DESARROLLO.md](DESARROLLO.md) para el historial y
 [la estabilizacion de la demo](docs/DEMO_0_7_1.md) para cambios y limites.
 
-Las animaciones proceden de Universal Animation Library de Quaternius, CC0; sus
-licencias se conservan en `source_assets/quaternius/`. El modelo y sus texturas
-Meshy fueron proporcionados por el autor del proyecto: hay que confirmar los
-derechos de su plan de generacion antes de distribuirlos. La licencia de las
-animaciones no concede por si sola una licencia al modelo ni al juego completo.
+El nuevo Neri y sus movimientos proceden de Meshy. Los recursos históricos
+de Universal Animation Library conservan sus licencias en `source_assets/quaternius/`.

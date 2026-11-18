@@ -223,13 +223,14 @@ func stop_voice(fade: float = 0.3) -> void:
 
 
 func play_cue(cue: String) -> void:
-	var is_step: bool = cue == "step"
+	var is_running := cue == "step_run"
+	var is_step := cue == "step" or is_running
 	if is_step: cue = "step_%d" % randi_range(0, 3)
 	if not cues.has(cue) and cue.begins_with("rune_"): cue = "rune"
 	if not cues.has(cue): return
 	var player: AudioStreamPlayer = voices[next_voice]
 	next_voice = (next_voice + 1) % voices.size()
 	player.stream = cues[cue]
-	player.volume_db = -17 if is_step else (-12 if cue in ["fragment_rise", "island_chime", "destello", "star_step"] else -9)
-	player.pitch_scale = randf_range(0.94, 1.06) if is_step or cue == "island_chime" else 1.0
+	player.volume_db = (-14.5 if is_running else -17.0) if is_step else (-12.0 if cue in ["fragment_rise", "island_chime", "destello", "star_step"] else -9.0)
+	player.pitch_scale = randf_range(0.88, 0.98) if is_running else (randf_range(0.94, 1.06) if is_step or cue == "island_chime" else 1.0)
 	player.play()

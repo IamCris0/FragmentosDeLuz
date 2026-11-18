@@ -15,6 +15,7 @@ CASES = {
     "save": (["--script", "res://tools/qa_save_store.gd"], ["--qa"], "adventure/save_report.json"),
     "regressions": (["--script", "res://tools/qa_demo_regressions.gd"], ["--qa-regressions"], "demo/regressions_report.json"),
     "meshy": (["--script", "res://tools/qa_meshy_assets.gd"], ["--qa-meshy"], "meshy/report.json"),
+    "cinematics": ([], ["--qa", "--qa-cinematics"], "adventure/cinematic_report.json"),
     "route": ([], ["--qa"], "adventure/qa_report.json"),
     "combat": ([], ["--qa", "--qa-combat"], "adventure/combat_report.json"),
     "guardian": ([], ["--qa", "--qa-guardian"], "adventure/guardian_report.json"),
@@ -62,7 +63,7 @@ def main():
         parser.error("repeat and timeout must be positive")
     if not args.visual and args.cases and "meshy" in args.cases:
         parser.error("The meshy case bakes rendered skin poses; add --visual.")
-    names = args.cases or [name for name in CASES if args.visual or name not in {"avatar", "menu", "map", "art", "prologue", "meshy"}]
+    names = args.cases or [name for name in CASES if args.visual or name not in {"avatar", "menu", "map", "art", "prologue", "meshy", "cinematics"}]
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S_%fZ")
     output = ROOT / "artifacts" / "validation" / stamp
     output.mkdir(parents=True)

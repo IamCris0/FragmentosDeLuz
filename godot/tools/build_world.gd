@@ -624,7 +624,7 @@ func build() -> void:
 	capsule.height=1.75
 	player_shape.shape=capsule
 	player_shape.position.y=.875
-	var appearance:=model(player,"characters/neri_quaternius","Visual",Vector3.ZERO)
+	var appearance:=model(player,"characters/neri_redesigned","Visual",Vector3.ZERO)
 	appearance.rotation.y=PI
 	var pivot:Node3D=attach(player,Node3D.new(),"CameraPivot")
 	pivot.position.y=1.4
