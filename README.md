@@ -20,7 +20,7 @@ Consulta [la revisión artística](docs/ARTE_MESHY_2026_11.md).
 
 La primera apertura importa los recursos. No hace falta Blender para jugar.
 `Ver_prologo.cmd` reproduce el comic y regresa al menu sin borrar la partida.
-No se incluye todavia un ejecutable independiente ni las plantillas de exportacion.
+La demo local de Windows se encuentra en `exports/Windows/FragmentosDeLuz.exe`. Conserva el archivo `.pck` junto al ejecutable. Para reconstruirla con las plantillas oficiales de Godot, usa el perfil de exportación **Windows Demo**. El plan y las comprobaciones del rediseño están en `PLAN_DE_TRABAJO.md`.
 
 Controles: WASD, Espacio para saltar, Shift para correr, E para interactuar,
 Q para el pulso, C para esquivar, J para el diario, K para las habilidades,
