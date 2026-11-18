@@ -23,8 +23,8 @@ func _physics_process(delta: float) -> void:
 	if player.locked or purified or stun_time > 0.0: _clear_wave()
 	var active := not purified and global_position.distance_to(player.global_position) < 12.0
 	var caption := "NÚCLEO INESTABLE" if health == 1 else "ECO DEL FARO"
-	if mode == Mode.WINDUP: caption = "CARGANDO RESONANCIA"
-	elif is_instance_valid(wave): caption = "ONDA DE RESONANCIA"
+	if mode == Mode.WINDUP: caption = "CARGANDO · INTERRUMPE CON TU PULSO"
+	elif is_instance_valid(wave): caption = "SALTA LA ONDA PARA RECUPERAR LUZ"
 	elif mode == Mode.STUNNED: caption = "RESONANCIA INTERRUMPIDA"
 	var status := [active, health, caption]
 	if status != last_status:

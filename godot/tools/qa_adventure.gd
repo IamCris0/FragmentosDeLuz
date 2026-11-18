@@ -367,14 +367,14 @@ func guardian_checks() -> void:
 	check(is_equal_approx(GameEvents.energy, after_hit), "One wave does not stack damage")
 	wave.queue_free()
 	player.hurt_time = 0
-	GameEvents.set_energy(100)
+	GameEvents.set_energy(75)
 	GameEvents.damage_grace = 0
 	Input.action_press("jump")
 	await get_tree().physics_frame
 	Input.action_release("jump")
 	wave = test_wave(Vector3(0, 0, 2))
 	await settle(0.35)
-	check(player.global_position.y > 0.55 and GameEvents.energy > 99, "Jump clears the wave at its crossing")
+	check(player.global_position.y > 0.55 and wave.absorbed and is_equal_approx(GameEvents.energy, 83), "Jump absorbs the wave once for eight energy")
 	check(not player.try_dodge(Vector3.FORWARD), "Dodge cannot start in midair")
 	wave.queue_free()
 	await settle(0.6)

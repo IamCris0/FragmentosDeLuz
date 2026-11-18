@@ -6,6 +6,7 @@ var damage: float = 28.0
 var damage_enabled: bool = true
 var radius: float = 0.15
 var hit_player: bool = false
+var absorbed: bool = false
 var ring: MeshInstance3D
 var material: StandardMaterial3D
 var player: CharacterBody3D
@@ -46,10 +47,18 @@ func _physics_process(delta: float) -> void:
 	var offset := player.global_position - global_position
 	var distance := Vector2(offset.x, offset.z).length()
 	# Sweep the annulus between frames; height and cover permit jump/obstacle evasion.
-	if not hit_player and damage_enabled and distance >= previous - 0.38 and distance <= radius + 0.38 and absf(offset.y) < 0.55:
+	if not hit_player and not absorbed and damage_enabled and distance >= previous - 0.38 and distance <= radius + 0.38:
 		var ray := PhysicsRayQueryParameters3D.create(global_position + Vector3.UP * 0.8, player.global_position + Vector3.UP * 0.8, 1)
 		if get_world_3d().direct_space_state.intersect_ray(ray).is_empty():
-			hit_player = true
-			if GameEvents.damage_player(damage, "La onda del guardián alcanzó tu luz"):
-				GameEvents.sound_requested.emit("hit")
+			if offset.y >= 0.55 and offset.y <= 2.0 and not player.is_on_floor():
+				absorbed = true
+				var before := GameEvents.energy
+				GameEvents.set_energy(before + 8.0)
+				var gain := roundi(GameEvents.energy - before)
+				GameEvents.toast_requested.emit("Resonancia absorbida · +%d energía" % gain if gain > 0 else "Resonancia absorbida")
+				GameEvents.sound_requested.emit("pickup")
+			elif absf(offset.y) < 0.55:
+				hit_player = true
+				if GameEvents.damage_player(damage, "La onda del guardián alcanzó tu luz"):
+					GameEvents.sound_requested.emit("hit")
 	if radius >= max_radius: queue_free()
