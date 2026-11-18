@@ -24,6 +24,9 @@ func _enter_tree() -> void:
 
 func _ready() -> void:
 	GameEvents.set_cinematic(false)
+	var garden := preload("res://scripts/bridge_garden.gd").new()
+	garden.name = "BridgeGarden"
+	add_child(garden)
 	var feedback := Node3D.new()
 	feedback.name = "CombatFeedback"
 	feedback.set_script(load("res://scripts/combat_feedback.gd"))

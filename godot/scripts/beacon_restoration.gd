@@ -78,6 +78,10 @@ func restore(animate: bool) -> void:
 	var environment: Environment = get_parent().get_node("WorldEnvironment").environment
 	if animate:
 		GameEvents.sound_requested.emit("beacon_chime")
+		var melody := create_tween()
+		for note in ["rune_0", "rune_1", "rune_0", "rune_2", "solved"]:
+			melody.tween_callback(GameEvents.sound_requested.emit.bind(note))
+			melody.tween_interval(0.45)
 		var tween := create_tween().set_parallel(true)
 		tween.tween_method(func(value: float) -> void: material.set_shader_parameter("strength", value), 0.0, 1.0, 3.0)
 		tween.tween_property(light, "light_energy", 3.0, 3.0)

@@ -35,7 +35,12 @@ func interact(_player: Node3D) -> void:
 	match kind:
 		"luma":
 			GameEvents.story("luma_intro", "LUMA · ARCHIVISTA DE AURALIA", "Llegaste siguiendo una señal, Neri. Yo llevo cien años esperando una respuesta. Cuando el faro se apagó, nuestra ciudad se partió en el cielo.\n\nNo todo lo que quedó aquí quiere volver a despertar. Los ecos del faro se alimentan de energía viva: si se acercan demasiado, usa Q para emitir un pulso de luz.\n\nRecupera los siete fragmentos de su núcleo. En el jardín, despierta primero la OLA, después el SOL y al final la ESTRELLA. El puente recordará el camino.")
-			GameEvents.set_objective("Reúne los fragmentos y alcanza el Jardín de Ecos")
+			if GameEvents.story_seen.has("garden_bridge"):
+				GameEvents.set_objective("Reúne los fragmentos y alcanza el Jardín de Ecos")
+			elif GameEvents.story_seen.has("garden_lantern"):
+				GameEvents.set_objective("Sigue el latido del farol hasta la lente")
+			else:
+				GameEvents.set_objective("Busca el farol que aún late junto al puente hundido")
 		"memory":
 			if item_id.begins_with("lore_") and not GameEvents.LORE_TITLES.has(item_id):
 				# Fase 7: memorias del archipiélago (dos por isla).
