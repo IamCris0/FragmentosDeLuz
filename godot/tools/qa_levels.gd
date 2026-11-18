@@ -553,7 +553,7 @@ func cefiro_checks() -> void:
 	check(get_tree().get_nodes_in_group("enemy").size() == 8 and get_tree().get_nodes_in_group("cefiro").size() == 4, "Eight enemies, four Céfiros")
 	check(get_tree().get_nodes_in_group("valve").size() == 3, "Three wind valves")
 	check(get_tree().get_nodes_in_group("crumble_platform").size() == 3, "Three crumbling clouds")
-	check(get_tree().get_nodes_in_group("wind_zone").size() == 4, "Four wind currents")
+	check(get_tree().get_nodes_in_group("wind_zone").size() == 7, "Four traversal currents and three mill return currents")
 	check(not game.updraft.active, "Great updraft sleeps until the valves open")
 	# Planeo (lo concede la historia al llegar).
 	GameEvents.grant_story_skill("glide")
@@ -713,6 +713,9 @@ func cefiro_mills() -> void:
 	check(GameEvents.level_flag("valve_1") and GameEvents.level_flag("valve_2") and GameEvents.level_flag("valve_3"), "Three valves open")
 	check(game.get_node("Zones/Mills/Windmill_1").spinning and game.get_node("Zones/Mills/Windmill_3").spinning, "Windmills wake up")
 	check(game.updraft.active and game.updraft.strength > 0.9, "Great updraft wakes")
+	for i in 3:
+		var breeze = game.get_node("Zones/Mills/ReturnBreeze%d" % i)
+		check(breeze.active and breeze.push.dot(-breeze.position) > 0, "Mill %d opens a current toward the crossing" % (i + 1))
 	# Carrusel y nube lejana.
 	var carousel: Node3D = game.get_node("Carousel")
 	await walk_to(Vector3(-12.0, 3, -72.0))

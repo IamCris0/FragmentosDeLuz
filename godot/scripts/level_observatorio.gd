@@ -47,6 +47,31 @@ func setup_level() -> void:
 	boss.arena_center = get_node("Zones/Dome").global_position
 	boss.defeated.connect(_on_boss_defeated)
 	bridge = get_node("StarBridge")
+	var sky_anchor := get_node("Zones/Garden/Constellation") as Node3D
+	var star_points := [Vector3(-3, 5, -5), Vector3(0, 6.4, -5), Vector3(3, 5.6, -5)]
+	var previous_star: Node3D
+	for i in 3:
+		if not GameEvents.is_level_done(["auralia", "grutas", "cefiro"][i]): continue
+		var star := preload("res://assets/props/fragment_collectible.glb").instantiate() as Node3D
+		star.name = ["EstrellaAuralia", "EstrellaGrutas", "EstrellaCefiro"][i]
+		star.position = star_points[i]
+		sky_anchor.add_child(star)
+		if previous_star:
+			var thread := MeshInstance3D.new()
+			var tube := CylinderMesh.new()
+			var delta_pos := star.position - previous_star.position
+			tube.height = delta_pos.length()
+			tube.top_radius = 0.025
+			tube.bottom_radius = 0.025
+			thread.mesh = tube
+			var gold := StandardMaterial3D.new()
+			gold.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+			gold.albedo_color = Color("ffd994")
+			thread.material_override = gold
+			thread.position = (star.position + previous_star.position) * 0.5
+			thread.quaternion = Quaternion(Vector3.UP, delta_pos.normalized())
+			sky_anchor.add_child(thread)
+		previous_star = star
 	for node in get_node("Zones/Garden/Constellation").get_children():
 		if node.is_in_group("destello"): reward = node
 	arena = get_node("Zones/Dome/ArenaTrigger")

@@ -26,6 +26,15 @@ func setup_level() -> void:
 	for i in VALVES.size():
 		var mill := get_node_or_null("Zones/Mills/Windmill_%d" % (i + 1))
 		if mill and GameEvents.level_flag(VALVES[i]): mill.set_spinning(true)
+		var valve := get_node("Zones/Mills/Valve_%d" % (i + 1)) as Node3D
+		var breeze := preload("res://scripts/wind_zone.gd").new()
+		breeze.name = "ReturnBreeze%d" % i
+		breeze.position = valve.position * 0.6 + Vector3.UP * 1.7
+		breeze.lift = 0
+		breeze.size = Vector3(5, 4, 5)
+		breeze.push = -valve.position.normalized() * 5.5
+		breeze.active = GameEvents.level_flag(VALVES[i])
+		valve.get_parent().add_child(breeze)
 	if _valves_open() == VALVES.size(): updraft.set_active(true, false)
 	director.register("cefiro_intro", _seq_intro)
 	director.register("cefiro_winds", _seq_winds)
@@ -45,6 +54,7 @@ func _on_valve_opened(flag: String) -> void:
 	var index := VALVES.find(flag)
 	var mill := get_node_or_null("Zones/Mills/Windmill_%d" % (index + 1))
 	if mill: mill.set_spinning(true)
+	get_node("Zones/Mills/ReturnBreeze%d" % index).set_active(true)
 	var count := _valves_open()
 	GameEvents.sound_requested.emit("wind_gust")
 	if count < VALVES.size():

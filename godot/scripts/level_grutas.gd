@@ -18,6 +18,13 @@ var altar: Node
 func setup_level() -> void:
 	Style.apply(self, "violet")
 	altar = get_node("Zones/Heart/KeyAltar")
+	# The restored deck carries two rows of crystal teeth across the chasm.
+	for side in [-1, 1]:
+		for step in 5:
+			var shard := preload("res://assets/environment/crystal_shard.glb").instantiate() as Node3D
+			shard.position = Vector3(side * 1.65, 0.18, -4 + step * 2)
+			shard.scale = Vector3.ONE * (0.35 + 0.06 * step)
+			get_node("LightBridge").add_child(shard)
 	for receptor in get_tree().get_nodes_in_group("beam_receptor"):
 		receptor.activated.connect(_on_receptor_activated.bind(str(receptor.flag)))
 	if GameEvents.level_flag("heart_open"): altar.reveal(false)
