@@ -483,6 +483,15 @@ func guardian_checks() -> void:
 
 
 func combat_checks() -> void:
+	GameEvents.set_energy(100)
+	Input.action_press("move_right")
+	Input.action_press("sprint")
+	await settle(0.45)
+	Input.action_release("sprint")
+	Input.action_release("move_right")
+	check(player.stamina < 100 and GameEvents.energy == 100 and player.mana == 100, "Running spends stamina alone")
+	await settle(1.5)
+	check(player.stamina == 100, "Rest restores sprint stamina")
 	var enemy: Area3D = game.get_node("Zones/Entrance/TutorialEcho")
 	for other in get_tree().get_nodes_in_group("enemy"):
 		other.set_physics_process(false)
@@ -510,7 +519,7 @@ func combat_checks() -> void:
 	Input.action_release("light_pulse")
 	await settle(0.12)
 	check(enemy.stun_time > 0.0 and enemy.windup_time == 0.0, "Q cancels a pending attack")
-	check(GameEvents.energy < 90.0, "Pulse spends energy")
+	check(player.mana < 90.0 and GameEvents.energy > 99.0, "Pulse spends mana independently of vitality")
 	check(game.get_node("CombatFeedback").get_child_count() > 0, "Pulse creates visible world effect")
 	await capture("combat_02_pulse")
 	var stopped_at: Vector3 = enemy.global_position
@@ -539,6 +548,15 @@ func combat_checks() -> void:
 	check(GameEvents.energy >= 60.0 and GameEvents.damage_grace >= 2.0, "Respawn restores energy and protection")
 	player.global_position = enemy.global_position + Vector3.UP * 4.0
 	check(not enemy.has_sight(), "Enemy cannot attack a different floor")
+	player.global_position = enemy.global_position + Vector3(0, 0.1, 1.25)
+	player.visual.rotation.y = PI
+	enemy.health = 3
+	var reserve: float = GameEvents.energy
+	player.strike()
+	check(enemy.health == 2 and GameEvents.energy == reserve, "Frontal strike hits without consuming scanner energy")
+	player.visual.rotation.y = 0
+	player.strike()
+	check(enemy.health == 2, "Strike misses an opponent behind Neri")
 	player.global_position = Vector3(0, 0.1, 7)
 	enemy.health = 1
 	GameEvents.request_pulse(enemy.global_position + Vector3.UP * 0.85, 4.6, 0.0)

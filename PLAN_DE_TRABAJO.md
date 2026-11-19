@@ -21,3 +21,11 @@ Punto de partida: 6c99c09. Auralia tiene una ruta probada, tres runas y un guard
 Evidencias locales: `artifacts/export_smoke/adventure/qa_report.json`, informes gráficos de ruta y cinemáticas en `artifacts/validation/20261118T130915_333731Z/`, Céfiro y cinemáticas en `artifacts/validation/20261118T131252_583102Z/`.
 
 **Próxima acción al retomar:** observar a un jugador nuevo desde el arco hasta el primer cruce, medir cuánto tarda y dónde busca el farol. Comprobar también si encuentra el ensayo opcional. Usar esos resultados para ajustar el encuadre, las pistas y el ritmo. La duración aproximada de cinco minutos y el rendimiento en equipos distintos siguen pendientes de prueba humana.
+
+## Nueva dirección · Aventura por misiones
+
+Primera entrega: el faro abre dos expediciones en paralelo. Las dos llaves siguen siendo necesarias para entrar al Observatorio. Neri dispone de resistencia para correr y recupera el aliento caminando. El prólogo cancela la mezcla de la viñeta anterior al cambiar de página.
+
+Combate disponible: F o gatillo derecho barre un arco frontal contra los ecos cercanos. El pulso y la nova cuestan 18 y 30 de maná. La resistencia y el maná se rellenan al descansar o al reaparecer.
+
+Próximo tramo jugable: convertir el santuario en un punto de partida y regreso para expediciones inacabadas, con encargos que se puedan seguir desde el diario. Después construir una mazmorra opcional con equipo recuperable y un enemigo que enseñe a alternar golpe y pulso. Probar la escalada en una sola pared antes de extenderla a las islas. Producir una animación de ataque dedicada y revisar siluetas, montaje del cómic y voces en contexto.

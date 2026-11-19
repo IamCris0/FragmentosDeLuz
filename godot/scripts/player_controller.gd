@@ -24,6 +24,11 @@ var pulse_cooldown: float = 0.0
 var pulse_time: float = 0.0
 var hurt_time: float = 0.0
 var regeneration_delay: float = 0.0
+var stamina := 100.0
+var mana := 100.0
+var winded := false
+var stamina_rest := 0.0
+var strike_wait := 0.0
 const PULSE_COOLDOWN := 2.4
 const PULSE_COST := 18.0
 const DODGE_COST := 12.0
@@ -63,6 +68,15 @@ var charge_glow: OmniLight3D
 
 func _ready() -> void:
 	add_to_group("player")
+	if not InputMap.has_action("melee"):
+		InputMap.add_action("melee")
+		var key := InputEventKey.new()
+		key.physical_keycode = KEY_F
+		InputMap.action_add_event("melee", key)
+		var trigger := InputEventJoypadMotion.new()
+		trigger.axis = JOY_AXIS_TRIGGER_RIGHT
+		trigger.axis_value = 1
+		InputMap.action_add_event("melee", trigger)
 	arm.add_excluded_object(get_rid())
 	_setup_animation()
 	GameEvents.player_hit.connect(_on_player_hit)
@@ -139,6 +153,7 @@ func _build_wings() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	strike_wait = maxf(0, strike_wait - delta)
 	coyote = 0.12 if is_on_floor() else maxf(coyote - delta, 0)
 	jump_buffer = maxf(jump_buffer - delta, 0)
 	interact_time = maxf(interact_time - delta, 0)
@@ -187,7 +202,7 @@ func _physics_process(delta: float) -> void:
 				velocity.y = maxf(velocity.y, fall_limit)
 		else:
 			velocity.y -= gravity * delta * (0.55 if lift > 0.0 else 1.0)
-	var sprinting: bool = not locked and not dodging and not gliding and Input.is_action_pressed("sprint") and GameEvents.energy > 1 and axes.length() > 0.1
+	var sprinting: bool = not locked and not dodging and not gliding and not winded and Input.is_action_pressed("sprint") and axes.length() > 0.1
 	var current_speed: float = sprint_speed if sprinting else speed
 	if gliding:
 		current_speed = GLIDE_SPEED * (1.2 if GameEvents.has_skill("serene_glide") else 1.0)
@@ -219,6 +234,8 @@ func _physics_process(delta: float) -> void:
 		coyote = 0
 		GameEvents.sound_requested.emit("jump")
 	_handle_pulse(delta, dodging)
+	if Input.is_action_just_pressed("melee") and not locked and not dodging and hurt_time <= 0 and pulse_time <= 0 and not pulse_charging and interaction_lock <= 0 and strike_wait <= 0:
+		strike()
 	if direction.length() > 0.1:
 		visual.rotation.y = lerp_angle(visual.rotation.y, atan2(direction.x, direction.z), minf(1, delta * (12 if not gliding else 5)))
 	move_and_slide()
@@ -227,10 +244,18 @@ func _physics_process(delta: float) -> void:
 		GameEvents.sound_requested.emit("land")
 	if is_on_floor(): gliding = false
 	if not locked:
-		if sprinting:
-			GameEvents.set_energy(GameEvents.energy - delta * GameEvents.sprint_drain())
-			regeneration_delay = maxf(regeneration_delay, 0.65)
-		elif regeneration_delay <= 0.0 and not pulse_charging:
+		if pulse_cooldown <= 0 and not pulse_charging:
+			mana = minf(100, mana + 9 * delta)
+		if sprinting and was_grounded and get_position_delta().slide(Vector3.UP).length() > delta * 0.6:
+			stamina = maxf(0, stamina - delta * GameEvents.sprint_drain())
+			stamina_rest = 0.75
+			winded = stamina <= 0
+		else:
+			stamina_rest = maxf(0, stamina_rest - delta)
+			if stamina_rest <= 0:
+				stamina = minf(100, stamina + 21 * delta)
+				if stamina >= 25: winded = false
+		if regeneration_delay <= 0.0 and not pulse_charging:
 			GameEvents.set_energy(GameEvents.energy + delta * GameEvents.regen_rate())
 	var state: String = "idle"
 	if dodging: state = "dodge"
@@ -261,7 +286,7 @@ func _physics_process(delta: float) -> void:
 	if global_position.y < _fall_limit():
 		respawn()
 	var cooldown_total: float = GameEvents.pulse_cooldown()
-	GameEvents.set_pulse_ready(1.0 - pulse_cooldown / cooldown_total, pulse_cooldown <= 0.0 and GameEvents.energy >= PULSE_COST)
+	GameEvents.set_pulse_ready(1.0 - pulse_cooldown / cooldown_total, pulse_cooldown <= 0.0 and mana >= PULSE_COST)
 	GameEvents.dodge_changed.emit(1.0 - dodge_cooldown / GameEvents.dodge_cooldown(), dodge_cooldown <= 0.0 and GameEvents.energy >= GameEvents.dodge_cost())
 	_pad_camera(delta)
 	_find_interaction()
@@ -271,7 +296,35 @@ func _physics_process(delta: float) -> void:
 		target.interact(self)
 
 
-## Altura de caída que devuelve al refugio; los niveles pueden definir la suya (fall_limit).
+func strike() -> void:
+	strike_wait = 0.8
+	interact_time = 0.36
+	var arc := MeshInstance3D.new()
+	var ribbon := ImmediateMesh.new()
+	var gold := StandardMaterial3D.new()
+	gold.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	gold.cull_mode = BaseMaterial3D.CULL_DISABLED
+	gold.albedo_color = Color("ffda91")
+	ribbon.surface_begin(Mesh.PRIMITIVE_TRIANGLE_STRIP, gold)
+	for i in 15:
+		var angle := deg_to_rad(-58 + i * 8)
+		var outward := Vector3(sin(angle), 0, cos(angle))
+		var height := Vector3.UP * (0.7 + i * 0.035)
+		ribbon.surface_add_vertex(height + outward * 1.55)
+		ribbon.surface_add_vertex(height + outward * (1.55 + 0.15 * sin(PI * i / 14)))
+	ribbon.surface_end()
+	arc.mesh = ribbon
+	add_child(arc)
+	arc.rotation.y = visual.rotation.y
+	var sweep := arc.create_tween()
+	sweep.tween_property(arc, "rotation:y", arc.rotation.y + 0.32, 0.14)
+	sweep.tween_callback(arc.queue_free)
+	for enemy in get_tree().get_nodes_in_group("enemy"):
+		if not enemy.has_method("receive_strike"): continue
+		var offset: Vector3 = enemy.global_position - global_position
+		if offset.length() <= 2.15 and visual.global_basis.z.normalized().dot(offset.normalized()) >= 0.48:
+			enemy.receive_strike(global_position + Vector3.UP * 0.85)
+
 func _fall_limit() -> float:
 	var scene := get_tree().current_scene
 	if scene and "fall_limit" in scene: return float(scene.fall_limit)
@@ -294,7 +347,7 @@ func _handle_pulse(delta: float, dodging: bool) -> void:
 		charge_glow.light_energy = 0.0
 		return
 	if Input.is_action_just_pressed("light_pulse"):
-		if pulse_cooldown <= 0.0 and GameEvents.energy >= PULSE_COST:
+		if pulse_cooldown <= 0.0 and mana >= PULSE_COST:
 			if nova_skill:
 				pulse_charging = true
 				pulse_charge = 0.0
@@ -303,18 +356,18 @@ func _handle_pulse(delta: float, dodging: bool) -> void:
 		elif pulse_cooldown > 0.0:
 			GameEvents.toast_requested.emit("El escáner aún está recargando")
 		else:
-			GameEvents.toast_requested.emit("Necesitas energía para emitir un pulso")
+			GameEvents.toast_requested.emit("Necesitas maná para emitir un pulso")
 	if pulse_charging:
 		pulse_charge += delta
 		charge_glow.light_energy = clampf(pulse_charge / NOVA_FULL, 0.0, 1.0) * 3.0
 		var released := not Input.is_action_pressed("light_pulse")
 		if released or pulse_charge >= NOVA_FULL:
 			pulse_charging = false
-			var nova := pulse_charge >= NOVA_CHARGE and GameEvents.energy >= NOVA_COST
+			var nova := pulse_charge >= NOVA_CHARGE and mana >= NOVA_COST
 			charge_glow.light_energy = 0.0
 			pulse_charge = 0.0
-			if not nova and GameEvents.energy < PULSE_COST:
-				GameEvents.toast_requested.emit("Necesitas energía para emitir un pulso")
+			if not nova and mana < PULSE_COST:
+				GameEvents.toast_requested.emit("Necesitas maná para emitir un pulso")
 			else:
 				_fire_pulse(nova)
 
@@ -323,13 +376,12 @@ func _fire_pulse(nova: bool) -> void:
 	var cost: float = NOVA_COST if nova else PULSE_COST
 	pulse_cooldown = GameEvents.pulse_cooldown() * (1.3 if nova else 1.0)
 	pulse_time = 0.48
-	GameEvents.set_energy(GameEvents.energy - cost)
-	regeneration_delay = maxf(regeneration_delay, 1.0)
+	mana -= cost
 	var radius: float = GameEvents.pulse_radius() * (1.5 if nova else 1.0)
 	GameEvents.request_pulse(global_position + Vector3.UP * 0.85, radius, 1.55 if not nova else 2.4, 2 if nova else 1)
 	GameEvents.sound_requested.emit("nova" if nova else "pulse")
 	if GameEvents.tutorial_stage < 2 and GameEvents.level == "auralia":
-		GameEvents.set_tutorial(2, "Pulso liberado. Q aturde ecos cercanos, pero consume energía.")
+		GameEvents.set_tutorial(2, "Q consume maná. Usa F para golpear de cerca mientras el escáner recarga.")
 
 
 func _update_wings(delta: float) -> void:
@@ -431,6 +483,10 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func respawn() -> void:
+	mana = 100
+	stamina = 100
+	winded = false
+	stamina_rest = 0
 	dodge_time = 0.0
 	dodge_cooldown = 0.0
 	global_position = GameEvents.checkpoint

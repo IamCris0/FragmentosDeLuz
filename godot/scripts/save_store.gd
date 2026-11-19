@@ -31,10 +31,9 @@ static func flags(value: Variant, limit: int = 64) -> Dictionary:
 ## Un nivel está disponible si el anterior está completo (Auralia siempre; Grutas tras el capítulo I).
 static func level_unlocked(id: String, chapter_one_done: bool, levels: Dictionary) -> bool:
 	if id == "auralia": return true
-	var previous := LevelData.requirement(id)
-	if previous == "": return false
-	if previous == "auralia": return chapter_one_done
-	return levels.has(previous) and bool((levels[previous] as Dictionary).get("done", false))
+	if not chapter_one_done: return false
+	if id in ["grutas", "cefiro"]: return true
+	return id == "observatorio" and levels.get("grutas", {}).get("done", false) and levels.get("cefiro", {}).get("done", false)
 
 
 static func normalize_levels(value: Variant, chapter_one_done: bool) -> Dictionary:

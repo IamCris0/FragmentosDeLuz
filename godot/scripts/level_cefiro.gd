@@ -117,7 +117,7 @@ func intro() -> void:
 
 func luma_talk() -> void:
 	if GameEvents.is_level_done(level_id):
-		GameEvents.story("cefiro_luma_done", "LUMA", "¿Oyes los molinos? Vuelven a cantar. Solo queda el Observatorio, Neri.")
+		GameEvents.story("cefiro_luma_done", "LUMA", "¿Oyes los molinos? Vuelven a cantar. " + _next_expedition())
 	elif GameEvents.zone >= 2 or GameEvents.level_flag("zone_2"):
 		GameEvents.story("cefiro_luma_mills", "LUMA", "Tres válvulas, tres molinos. Cuando los tres giren, el viento se reunirá en el centro y podrás subir hasta la cumbre planeando.")
 	else:
@@ -129,7 +129,10 @@ func key_obtained() -> void:
 	_update_hint()
 	if qa_mode: return
 	await play_when_free("cefiro_key")
-	await say_story("cefiro_key", "LUMA", "La Llave del Viento. Dos llaves, Neri. El Observatorio ya puede oírnos: el portal de la cumbre nos llevará a la carta.")
+	await say_story("cefiro_key", "LUMA", "La Llave del Viento. " + _next_expedition() + " El portal de la cumbre nos llevará a la carta.")
+
+func _next_expedition() -> String:
+	return "Las dos llaves abren el Observatorio." if GameEvents.is_level_done("grutas") else "Busca la Llave del Prisma en las grutas."
 
 
 # --- Cinemáticas ----------------------------------------------------------------------------------

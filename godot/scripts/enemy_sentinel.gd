@@ -194,16 +194,23 @@ func _move_towards(target: Vector3, step: float) -> void:
 func apply_pulse(origin: Vector3, radius: float, force: float) -> void:
 	if purified or global_position.distance_to(origin) > radius:
 		return
+	_receive_hit(origin, force, maxi(GameEvents.pulse_power, 1), 1.7 * GameEvents.stun_multiplier())
+
+func receive_strike(origin: Vector3) -> void:
+	if not purified:
+		_receive_hit(origin, 0.35, 1, 0.2)
+
+func _receive_hit(origin: Vector3, force: float, amount: int, stun: float) -> void:
 	var ray := PhysicsRayQueryParameters3D.create(origin, global_position + Vector3.UP * 0.85, 1)
 	if not get_world_3d().direct_space_state.intersect_ray(ray).is_empty():
 		return
 	# Fase 7: Destello cegador alarga el aturdimiento y la Nova resta dos puntos de integridad.
-	stun_time = 1.7 * GameEvents.stun_multiplier()
+	stun_time = stun
 	windup_time = 0.0
 	attack_time = 0.0
 	mode = Mode.STUNNED
 	warning_ring.hide()
-	health -= maxi(GameEvents.pulse_power, 1)
+	health -= amount
 	var away := global_position - origin
 	away.y = 0.0
 	if away.length() < 0.05:
@@ -212,7 +219,7 @@ func apply_pulse(origin: Vector3, radius: float, force: float) -> void:
 	GameEvents.sound_requested.emit("enemy_hit")
 	GameEvents.toast_requested.emit("El eco pierde forma" if health > 0 else "Eco purificado")
 	if tutorial_enemy and GameEvents.tutorial_stage < 3:
-		GameEvents.set_tutorial(3, "Eco purificado. C permite rodar en la dirección de movimiento. Reserva energía para esquivar o usar Q.")
+		GameEvents.set_tutorial(3, "F golpea de cerca. Q emite un pulso de maná. C permite rodar en la dirección de movimiento.")
 	if health <= 0:
 		_purify()
 

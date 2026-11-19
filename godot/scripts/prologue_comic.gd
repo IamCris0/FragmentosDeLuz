@@ -38,6 +38,7 @@ var artwork: Texture2D
 var art_motion: Tween
 var changing_scene: bool = false
 var narrator: AudioStreamPlayer
+var narration_mix: Tween
 
 
 func _exit_tree() -> void:
@@ -234,16 +235,20 @@ func _next() -> void:
 ## Fase 6: narración de Luma por viñeta; la música baja mientras habla.
 func _narrate(panel_index: int) -> void:
 	if not narrator: return
+	if narration_mix: narration_mix.kill()
+	narrator.stop()
 	var path := "res://assets/audio/voice/vo_prologue_%d.ogg" % panel_index
-	if not ResourceLoader.exists(path): return
+	var music := get_node_or_null("PrologueMusic") as AudioStreamPlayer
+	if not ResourceLoader.exists(path):
+		if music: music.volume_db = -8.0
+		return
 	narrator.stream = load(path)
 	narrator.play()
-	var music := get_node_or_null("PrologueMusic") as AudioStreamPlayer
 	if music:
-		var duck := create_tween()
-		duck.tween_property(music, "volume_db", -15.0, 0.4)
-		duck.tween_interval(maxf(0.5, narrator.stream.get_length() - 0.4))
-		duck.tween_property(music, "volume_db", -8.0, 1.2)
+		narration_mix = create_tween()
+		narration_mix.tween_property(music, "volume_db", -15.0, 0.4)
+		narration_mix.tween_interval(maxf(0.5, narrator.stream.get_length() - 0.4))
+		narration_mix.tween_property(music, "volume_db", -8.0, 1.2)
 
 
 func _finish() -> void:

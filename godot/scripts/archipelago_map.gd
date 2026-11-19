@@ -549,14 +549,14 @@ func _select(index: int, instant: bool = false) -> void:
 	info_subtitle.text = ("CAPÍTULO I" if id == "auralia" else "CAPÍTULO II") + " · " + (str(info.subtitle).to_upper() if unlocked else "SIN DESCUBRIR")
 	info_title.text = str(info.title) if unlocked else "Isla sin descubrir"
 	if not unlocked:
-		var previous := LevelData.requirement(id)
-		info_status.text = "Completa %s para trazar el camino." % str(LevelData.level(previous).title)
+		info_status.text = "Reúne las llaves del Prisma y del Viento para abrir el Observatorio." if id == "observatorio" else "Enciende el faro de Auralia para viajar."
 		info_stats.text = ""
 	elif id == "auralia":
 		info_status.text = "El faro restaurado ilumina el archipiélago." if done else "El faro aún duerme."
 		info_stats.text = "Fragmentos del faro: %d / 7\nMemorias de Auralia: %d / %d" % [GameEvents.collected, GameEvents.lore_count(), GameEvents.LORE_TOTAL]
 	else:
-		info_status.text = ("%s obtenida. Puedes volver cuando quieras." % str(info.key_title)) if done else ("La %s te espera." % str(info.key_title))
+		var missions := {"grutas": "Expedición · Desvía los rayos y abre el corazón de la gruta.", "cefiro": "Expedición · Despierta los tres molinos para alcanzar la cumbre.", "observatorio": "Expedición · Reconstruye la constelación de la Farolera."}
+		info_status.text = ("%s obtenida. Puedes volver cuando quieras." % str(info.key_title)) if done else missions[id]
 		info_stats.text = "Destellos: %d / %d\nMemorias: %d / %d" % [GameEvents.level_destellos(id), int(info.destellos), GameEvents.level_memories(id), info.memories.size()]
 	travel_button.disabled = not unlocked
 	travel_button.text = "Viajar a " + str(info.title) if unlocked else "Viajar"

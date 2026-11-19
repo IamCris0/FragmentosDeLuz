@@ -74,6 +74,8 @@ func run() -> void:
 	var locked := Store.normalize(early)
 	check(locked.level == "auralia" and not locked.levels.grutas.done and locked.levels.grutas.flags.is_empty(), "Islands stay locked until chapter one is complete")
 	var chain := chapter_one.duplicate(true)
+	check(Store.level_unlocked("cefiro", true, {}) and Store.level_unlocked("grutas", true, {}), "Both expeditions open at the restored lighthouse")
+	check(not Store.level_unlocked("observatorio", true, {"cefiro": {"done": true}}), "Wind-first route still needs the Prism Key")
 	chain.levels = {"grutas": {"checkpoint": 99, "done": true, "flags": {"door_1": true, "bad": 3}}, "cefiro": {"checkpoint": -4, "done": true}, "unknown": {"done": true}}
 	chain.level = "observatorio"
 	var unlocked := Store.normalize(chain)

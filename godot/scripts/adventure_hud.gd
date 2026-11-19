@@ -21,6 +21,7 @@ var revealed: float = 0
 var root: Control
 var top: Control
 var energy_bar: TextureProgressBar
+var stamina_label := Label.new()
 var count_label: Label
 var objective_label: Label
 var prompt_panel: PanelContainer
@@ -342,6 +343,12 @@ func _ready() -> void:
 	root = $HUD
 	top = $HUD/TopBar
 	energy_bar = $HUD/TopBar/EnergySection/EnergyBar
+	energy_bar.get_parent().add_child(stamina_label)
+	stamina_label.position = Vector2(74, 65)
+	stamina_label.add_theme_font_size_override("font_size", 13)
+	stamina_label.add_theme_constant_override("outline_size", 4)
+	stamina_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	stamina_label.hide()
 	count_label = $HUD/TopBar/FragmentSection/CountLabel
 	objective_label = $HUD/Objective/Description
 	prompt_panel = $HUD/InteractionPrompt
@@ -517,6 +524,10 @@ func layout() -> void:
 
 
 func _process(delta: float) -> void:
+	if is_instance_valid(player):
+		stamina_label.visible = player.stamina < 99.9 or player.mana < 99.9
+		if stamina_label.visible:
+			stamina_label.text = ("SIN ALIENTO" if player.winded else "RESISTENCIA") + " %d   ·   MANÁ %d" % [roundi(player.stamina), roundi(player.mana)]
 	var modal_open: bool = dialog_open or paused or journal.visible
 	var modal_open_7: bool = modal_open or (constellation != null and constellation.visible)
 	if level_mode:
@@ -704,7 +715,7 @@ func open_journal() -> void:
 	entries.text = "AURALIA · LA CIUDAD SUSPENDIDA\n\n" + GameEvents.objective + "\n\n"
 	entries.text += "Fragmentos recuperados: %d / 7\n\n" % GameEvents.collected
 	entries.text += "Umbral de Auralia -> Jardín de Ecos -> Paso del Cielo -> Faro de Auralia\n\n"
-	entries.text += "Pulso de luz: Q. Aturde ecos cercanos y consume energía del escáner.\n"
+	entries.text += "Pulso de luz: Q. Aturde ecos cercanos por 18 de maná. F golpea de cerca.\n"
 	entries.text += "Esquiva: C. Una rodada breve; también puedes saltar las ondas del guardián.\n"
 	entries.text += "Ecos purificados: %d\n\n" % GameEvents.enemies_purified
 	if GameEvents.story_seen.has("luma_intro"):
@@ -972,6 +983,7 @@ func _archipelago_summary() -> String:
 func _controls_text() -> String:
 	var body := "CONTROLES\nTeclado: WASD mover · Shift correr · Espacio saltar · E interactuar · Q pulso · C esquivar · K constelación · clic derecho cámara · Esc pausa · J diario.\n"
 	body += "Mando: stick izquierdo mover · stick derecho cámara · A saltar · X interactuar · Y pulso · B esquivar · cruceta arriba constelación · LB/L3 correr · Start pausa · Select diario."
+	body += "\nF / RT: golpe frontal. Correr gasta resistencia, que se recupera al bajar el ritmo."
 	if GameEvents.has_skill("glide"): body += "\nPlaneo: mantén saltar en el aire. Las corrientes ascendentes te elevan."
 	if GameEvents.has_skill("double_jump"): body += "\nDoble salto: pulsa saltar otra vez en el aire."
 	if GameEvents.has_skill("pulse_nova"): body += "\nNova: mantén el pulso y suéltalo cuando brille."
